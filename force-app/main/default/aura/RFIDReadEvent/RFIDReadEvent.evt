@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="RFID Read Event">
+    <aura:attribute name="payload" type="String"/>
+</aura:event>

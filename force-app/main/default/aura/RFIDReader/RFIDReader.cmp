@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable">
+    <aura:attribute name="inputText" type="String" default=""/>
+    <aura:attribute name="rfidLength" type="Integer" default="10"/>
+    <aura:registerEvent name="RFIDReadEvent" type="c:RFIDReadEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" /> <!--changed from "render" -->
+
+	<div style="text-align: center;">
+            <img src="{!$Resource.RFIDRead_Base}"/>
+        <!--<lightning:input updateOn="keyup" onkeypress="{!c.keypress}"/>-->
+    </div>
+</aura:component>
