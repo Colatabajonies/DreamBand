@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>DreampassAccessLog__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
         <members>Account.PhotoURL__c</members>
         <members>Account.CompanyName__c</members>
         <members>Account.Name</members>
         <members>Account.DreampassAccess__c</members>
         <members>Account.DreambandID__c</members>
+        <members>DreampassAccessLog__c.Account__c</members>
+        <members>DreampassAccessLog__c.Location__c</members>
+        <members>DreampassAccessLog__c.Status__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>RFID_AccessChallenge_ctrl</members>
+        <members>Dreampass_AccessChallenge_ctrl</members>
         <members>captureImageController</members>
         <name>ApexClass</name>
     </types>
      <types>
         <members>captureImageWebCam</members>
-        <members>RFID_AccessChallenge</members>
+        <members>Dreampass_AccessChallenge</members>
         <members>RFIDReader</members>
         <members>RFIDReadEvent</members>
+        <members>AutoComplete</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
         <members>RFIDRead_Base</members>
+        <members>qrscanner</members>
         <name>StaticResource</name>
     </types>
     <types>
         <members>UpdateAccountPhotoURL</members>
         <name>ApexTrigger</name>
     </types>
+    <types>
+        <members>QRScanner_VF</members>
+        <name>ApexPage</name>
+    </types>
+    
     <!--<types>
         <members>*</members>
         <name>ApexClass</name>
