@@ -9,32 +9,60 @@
             <apex:includeScript value="{!$Resource.qrscanner + '/qr-scanner.umd.min.js'}" />
         </head>
         <body style="margin-top:0;">
-            <div id="video-container" class="example-style-1">
-                <video id="qr-video" onclick="showHideCams()" style="max-width:100%;max-height:100%;border-radius:20px;border-style:solid;border-width:3px;border-color:#479FDA"></video>
-            </div>
             <div class="slds-scope">
                 <div style="display:none;">
                     Last Result: <span id="cam-qr-result">None</span>
                 </div>                    
+                <div id="video-toggle" class="hide">
+                    <label for="showcam">
+                        <input type="checkbox" id="showcam" name="showcam" checked="true" onchange="showcamChange(this)"  /> Camera 
+                    </label>
+                </div>
                 <div id="camlist-container" class="slds-form-element hide">
                     <select id="cam-list" class="slds-select">
                         <option value="environment" selected="true">Default Camera</option>
                     </select>
-                </div> 
+                </div>
+            </div>
+            <div id="video-container" class="example-style-1">
+                <video id="qr-video" onclick="showHideCams()" style="max-width:100%;max-height:100%;border-radius:20px;border-style:solid;border-width:3px;border-color:#479FDA"></video>
             </div>
             
-            
             <script type="text/javascript">
+            const videoContainer = document.getElementById('video-container');
             const videoElem = document.getElementById('qr-video');
             const camQrResult = document.getElementById('cam-qr-result');
             const camList = document.getElementById('cam-list');
             const camListContainer = document.getElementById('camlist-container');
+            const videoToggleContainer = document.getElementById('video-toggle');
             var scanlastResult = '';
+            var videoShowing = true;
             
             function showHideCams()
             {
                 camListContainer.classList.toggle("hide");
+                if (videoShowing)
+                    {
+                        videoToggleContainer.classList.toggle("hide");
+                    }
             }
+            
+            function showcamChange(value) {
+                videoContainer.classList.toggle("hide");
+                videoShowing = !videoShowing;
+                if (value.checked)
+                {                    
+                    qrScanner.start();
+                    videoToggleContainer.classList.toggle("hide");
+                    videoToggleContainer.classList.toggle("floatbottom");
+                }
+                else
+                {
+                    qrScanner.stop();
+                    camListContainer.classList.toggle("hide");
+                    videoToggleContainer.classList.toggle("floatbottom");
+                }
+            };
             
             function setResult(label, result) {
                 console.log(result.data);
@@ -49,29 +77,29 @@
                 label.style.color = 'teal';
                 clearTimeout(label.highlightTimeout);
                 label.highlightTimeout = setTimeout(() => {label.style.color = 'inherit'; scanlastResult = '';}, 3000);
-            }
-            
-            const qrScanner = new QrScanner(videoElem,  result => setResult(camQrResult, result), {
-                onDecodeError: error => {
-                    //camQrResult.textContent = error;
-                    //camQrResult.style.color = 'inherit';
-                },
-                highlightScanRegion: true,
-                highlightCodeOutline: true,
-            });
-            
-            qrScanner.start().then(() => {
-                // List cameras after the scanner started to avoid listCamera's stream and the scanner's stream being requested
-                // at the same time which can result in listCamera's unconstrained stream also being offered to the scanner.
-                // Note that we can also start the scanner after listCameras, we just have it this way around in the demo to
-                // start the scanner earlier.
-                QrScanner.listCameras(true).then(cameras => cameras.forEach(camera => {
-                const option = document.createElement('option');
-                option.value = camera.id;
-                option.text = camera.label;
-                camList.add(option);
+                                                          }
+                                                           
+                                                           const qrScanner = new QrScanner(videoElem,  result => setResult(camQrResult, result), {
+                                                           onDecodeError: error => {
+                                                               //camQrResult.textContent = error;
+                                                               //camQrResult.style.color = 'inherit';
+                                                           },
+                                                           highlightScanRegion: true,
+                                                           highlightCodeOutline: true,
+                                                          });
                 
-                /*alert('hasflash:' + qrScanner.hasFlash() + 'flash on:' + qrScanner.isFlashOn());
+                qrScanner.start().then(() => {
+                    // List cameras after the scanner started to avoid listCamera's stream and the scanner's stream being requested
+                    // at the same time which can result in listCamera's unconstrained stream also being offered to the scanner.
+                    // Note that we can also start the scanner after listCameras, we just have it this way around in the demo to
+                    // start the scanner earlier.
+                    QrScanner.listCameras(true).then(cameras => cameras.forEach(camera => {
+                    const option = document.createElement('option');
+                    option.value = camera.id;
+                    option.text = camera.label;
+                    camList.add(option);
+                    
+                    /*alert('hasflash:' + qrScanner.hasFlash() + 'flash on:' + qrScanner.isFlashOn());
                 if(qrScanner.hasFlash() && !qrScanner.isFlashOn())
                 {
                 	qrScanner.turnFlashOn();
@@ -101,6 +129,14 @@
                 }
                 
                 .hide {display: none;}
+                
+                @media screen and (max-width: 950px) {
+                .floatbottom {
+                	position:absolute;
+                	bottom:50px;
+                	right:10px;
+                }
+                }
             </style>
         </body>
     </html>

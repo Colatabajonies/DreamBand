@@ -30,7 +30,16 @@
         var rfid = event.getParam("payload");
         //alert('PAYLOAD RECEIVED:' + rfid);
         component.set('v.scanval', rfid);
-        helper.lookupRFID(component, event, helper);
+        //see if we could have received an QR code
+        if (rfid.startsWith('{') && rfid.endsWith('}'))
+        {
+            //Call QR Code method
+            helper.lookupQRCode(component, event, helper);            
+        }
+        else
+        {
+            helper.lookupRFID(component, event, helper);
+        }
     },
     
     onfocus : function(component, event, helper) 

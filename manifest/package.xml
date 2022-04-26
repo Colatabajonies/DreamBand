@@ -18,6 +18,7 @@
     <types>
         <members>Dreampass_AccessChallenge_ctrl</members>
         <members>captureImageController</members>
+        <members>AutoComplete_Ctrl</members>
         <name>ApexClass</name>
     </types>
      <types>
@@ -31,6 +32,7 @@
     <types>
         <members>RFIDRead_Base</members>
         <members>qrscanner</members>
+        <members>dreampassscannerbg</members>
         <name>StaticResource</name>
     </types>
     <types>

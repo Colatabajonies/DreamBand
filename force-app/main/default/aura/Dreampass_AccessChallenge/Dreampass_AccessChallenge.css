@@ -11,6 +11,8 @@
     padding-left:10px;
     padding-right:10px;
     outline: none;
+    background-image: url(/resource/dreampassscannerbg);
+    background-size: cover;
 }
 
 .THIS .scancard {
@@ -36,21 +38,33 @@
 }
 
 @media screen and (max-width: 950px) {
+    .THIS {
+        background-image: none;
+    }
     .THIS .scancard { 
         float: none;
         margin-left:0;
         margin-right:0;
         width:auto;
+        margin-bottom:100px;
     }
     
     .THIS .iframescan {
-        width:60%;
+        width:50%;
         padding-left:0;
         margin-top:10px;
+        height:210px;
     }
     
     .THIS .videocard 
     {
-        max-width:none;
+        max-width:inherit;
+        position:fixed;
+        bottom:10px;
+        right:0px;
+        overflow:auto;
+        min-height:auto;
+        text-align:right;
+        margin-right:20px;
     }
 }
