@@ -1,0 +1,4 @@
+<design:component label="Dreampass - Searchable Account Datatable">
+	<design:attribute name="selectedAccountID" label="The selected Account Id (Output)" />
+    <design:attribute name="createNewAttendee" label="User selected Create new Attendee (Output)" />
+</design:component>

@@ -39,6 +39,7 @@
         <members>AppleWalletGenerator</members>
         <members>ApplePassBookDictionary</members>
         <members>DreampassEmailHelper</members>
+        <members>Dreampass_AttendeeSearch_Ctrl</members>
         <name>ApexClass</name>
     </types>
      <types>
@@ -49,7 +50,9 @@
         <members>AutoComplete</members>
         <members>Dreampass_HVTile</members>
         <members>FlowScanner</members>
+        <members>Dreampass_RegistrationFlow</members>
         <members>Dreampass_RegistrationFlowComponent</members>
+        <members>Dreampass_AttendeeSearch</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>

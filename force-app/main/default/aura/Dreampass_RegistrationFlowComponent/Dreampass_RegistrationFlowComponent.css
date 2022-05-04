@@ -12,17 +12,33 @@
     width:100%;
 }
 
+.THIS .startover
+{
+    padding-top:20px;
+    text-align:center;
+    width:100%;
+}
+
 .THIS .flowcontainer
 {
     margin:auto;
-    padding-top:20px;
+    padding:30px;
     text-align:center;
     background-color:#FFF;
     border-radius:20px;
+    overflow-y:auto;
     width:66%;
-    height:500px;
+    height:550px;
 }
 
+.THIS .slds-radio
+{
+    text-align:left;
+}
+.THIS .flowruntime-input
+{
+    text-align:left;
+}
 .THIS .actionButtonBar
 {
     text-align: center;

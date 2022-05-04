@@ -1,14 +1,19 @@
 <aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes">
     <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="showStartOverButton" type="Boolean" default="false" />
     
     <div>
         <div class="contentcontainer">
             <img src="{!$Resource.wefsalesforce}" style="width:250px;margin-bottom:20px;"/>
             
             <div class="flowcontainer">
-                <lightning:flow aura:id="flowData" />
+                <lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
             </div>
         </div>
-        
+        <aura:if isTrue="{!v.showStartOverButton}">
+            <div class="startover">
+                <lightning:button variant="destructive" label="Start Over" title="Start Over" onclick="{!c.startover}" />
+            </div>
+        </aura:if>
     </div>
 </aura:component>

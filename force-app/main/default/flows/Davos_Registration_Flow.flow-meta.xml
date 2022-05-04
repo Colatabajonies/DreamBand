@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>54.0</apiVersion>
+    <choices>
+        <name>ChoiceEmployee</name>
+        <choiceText>SalesforceEmployee/Staff</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Employee</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChoiceGuest</name>
+        <choiceText>Guest Attendee</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Guest</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChoiceVIP</name>
+        <choiceText>VIP (White badge holders/spouses, GREEN accompanying, GREEN media/com, or GREY temporary)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>VIP</stringValue>
+        </value>
+    </choices>
     <interviewLabel>Davos Registration Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Davos Registration Flow</label>
     <processMetadataValues>
@@ -23,10 +47,41 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <screens>
+        <name>Attendee_Search</name>
+        <label>Attendee Search</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_Attendee</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayAttendeeInfo_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Attendee Search&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Search for the attendee below. If you can not find the attendee, select “Create New”.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>accountSearchDT</name>
+            <extensionName>c:Dreampass_AttendeeSearch</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedSearchAccountId</assignToReference>
+                <name>selectedAccountID</name>
+            </outputParameters>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Complete</name>
         <label>Complete</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -63,7 +118,7 @@
         </fields>
         <fields>
             <name>dispTextComplete</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Registration Complete!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;﻿&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿Registration Complete!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;A Dreampass was emailed to &quot;cgilmore@salesforce.com&quot;. Use this to gain access to all Salesforce Spaces.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>New Check In</nextOrFinishButtonLabel>
@@ -71,10 +126,103 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Create_Attendee</name>
+        <label>Create Attendee</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>VerifyProtocols</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayAttendeeInfo_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Create New Attendee&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Enter attendee information below&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Create_Attendee_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Create_Attendee_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>New_FirstName</name>
+                    <dataType>String</dataType>
+                    <fieldText>First Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>New_LastName</name>
+                    <dataType>String</dataType>
+                    <fieldText>Last Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Create_Attendee_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>New_DOB</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Date of Birth</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>New_CompanyName</name>
+                    <dataType>String</dataType>
+                    <fieldText>Company Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>New_Email</name>
+            <dataType>String</dataType>
+            <fieldText>Email Address</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>New_AttendeeType</name>
+            <choiceReferences>ChoiceVIP</choiceReferences>
+            <choiceReferences>ChoiceEmployee</choiceReferences>
+            <choiceReferences>ChoiceGuest</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>ChoiceGuest</defaultSelectedChoiceReference>
+            <fieldText>Attendee Type</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Review_Information</name>
         <label>Review Information</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -83,7 +231,7 @@
         </connector>
         <fields>
             <name>DisplayAttendeeInfo</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Attendee Info&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Please confirm the information below is correct&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Review Attendee Info&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Please confirm the information below is correct&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -195,7 +343,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Review_Information</targetReference>
+            <targetReference>Attendee_Search</targetReference>
         </connector>
         <fields>
             <name>DispTextStart</name>
@@ -228,6 +376,84 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>VerifyProtocols</name>
+        <label>Verify Documents</label>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Review_Information</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayAttendeeInfo_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Verify Documents&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;This attendee needs to have protocol documents verified before we can issue a Dreampass&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>VerifyProtocols_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>VerifyProtocols_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>attendeeinfo1</name>
+                    <fieldText>&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;Chris Gilmore&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;DOB:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;Feb 9, 1984&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>VerifyProtocols_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>attendeeinfo2</name>
+                    <fieldText>&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;cgilmore@salesforce.com&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;Salesforce&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>MatchID</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Attendee ID matches the information provided above</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>VerifyVax</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Attendee has a Vaccine Card that confirms they are fully vaccinated. (Fully vaccinated is THREE doses)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Attendee_has_proof_of_a_recent_72hr_PCR_24hr_Rapid_negative_COVID_19_test_result</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Attendee has proof of a recent (72hr PCR, 24hr Rapid) negative COVID-19 test result</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -248,6 +474,13 @@
     </variables>
     <variables>
         <name>scanvalue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedSearchAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
