@@ -56,6 +56,9 @@
         <members>RFIDRead_Base</members>
         <members>qrscanner</members>
         <members>dreampassscannerbg</members>
+        <members>greencheck</members>
+        <members>bluecheck</members>
+        <members>wefsalesforce</members>
         <name>StaticResource</name>
     </types>
     <types>
