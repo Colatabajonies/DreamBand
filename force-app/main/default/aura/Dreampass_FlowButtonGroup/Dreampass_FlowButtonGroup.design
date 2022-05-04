@@ -1,0 +1,8 @@
+<design:component label="Dreampass Button Group">
+	<design:attribute name="input1" label="Button 1 label" />
+  	<design:attribute name="input2" label="Button 2 label" />
+   	<design:attribute name="input3" label="Button 3 label (BRAND button)" />
+    <design:attribute name="output1" label="Button 1 output" />
+    <design:attribute name="output2" label="Button 2 output" />
+    <design:attribute name="output3" label="Button 3 output" />
+</design:component>

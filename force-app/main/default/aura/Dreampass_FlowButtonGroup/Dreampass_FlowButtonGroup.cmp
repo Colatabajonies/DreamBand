@@ -1,0 +1,18 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="input1" type="string" default=""/>
+    <aura:attribute name="input2" type="string" default=""/>
+    <aura:attribute name="input3" type="string" default=""/>
+    <aura:attribute name="output1" type="Boolean" default="false"/>
+    <aura:attribute name="output2" type="Boolean" default="false"/>
+    <aura:attribute name="output3" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.input1 != ''}">
+        <lightning:button variant="Neutral" label="{!v.input1}" title="{!v.input1}" onclick="{!c.click1}" />
+    </aura:if>
+    <aura:if isTrue="{!v.input2 != ''}">
+        <lightning:button variant="Neutral" label="{!v.input2}" title="{!v.input2}" onclick="{!c.click2}" />
+    </aura:if>
+    <aura:if isTrue="{!v.input3 != ''}">
+        <lightning:button variant="brand" label="{!v.input3}" title="{!v.input3}" onclick="{!c.click3}" />
+    </aura:if>
+</aura:component>

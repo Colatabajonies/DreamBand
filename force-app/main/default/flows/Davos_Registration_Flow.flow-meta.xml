@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Attendee_From_QR</name>
+        <label>Get Attendee From QR</label>
+        <locationX>774</locationX>
+        <locationY>446</locationY>
+        <actionName>Dreampass_ScanQRAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Is_Attendee_Found</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>requests</name>
+            <value>
+                <elementReference>scanvalue</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>objAttendee</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>Assign_Error_Text_No_Attendee</name>
+        <label>Assign Error Text No Attendee</label>
+        <locationX>1500</locationX>
+        <locationY>926</locationY>
+        <assignmentItems>
+            <assignToReference>strErrorText</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>You did not select an attendee. Please go back and either select an attendee or create a new one.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Attendee_Not_Found</name>
+        <label>Attendee Not Found</label>
+        <locationX>1236</locationX>
+        <locationY>1166</locationY>
+        <assignmentItems>
+            <assignToReference>strErrorText</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error retrieving Account data. Please go back and try again.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ChoiceEmployee</name>
         <choiceText>SalesforceEmployee/Staff</choiceText>
@@ -25,6 +79,121 @@
             <stringValue>VIP</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>Attendee_Search_Outcome</name>
+        <label>Attendee Search Outcome</label>
+        <locationX>1104</locationX>
+        <locationY>806</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Error_Text_No_Attendee</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ScreenNewAttendeeYes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CreateNewAttendee</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Attendee</targetReference>
+            </connector>
+            <label>New Attendee</label>
+        </rules>
+        <rules>
+            <name>Attendee_Selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SelectedSearchAccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Attendee_From_Search</targetReference>
+            </connector>
+            <label>Attendee Selected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Attendee_Found</name>
+        <label>Is Attendee Found?</label>
+        <locationX>774</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Attendee_Search</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AttendeeFoundYes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>objAttendee</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Review_Information</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Attendee_Found_From_Get_Record</name>
+        <label>Is Attendee Found From Get Record?</label>
+        <locationX>1104</locationX>
+        <locationY>1046</locationY>
+        <defaultConnector>
+            <targetReference>Attendee_Not_Found</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Attendee_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>objAttendee</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Review_Information</targetReference>
+            </connector>
+            <label>Attendee Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>VIPAccessDecision</name>
+        <label>Is VIP Access</label>
+        <locationX>477</locationX>
+        <locationY>326</locationY>
+        <defaultConnector>
+            <targetReference>Get_Attendee_From_QR</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isVIP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VIPAccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_VIP_Attendee</targetReference>
+            </connector>
+            <label>VIP</label>
+        </rules>
+    </decisions>
     <interviewLabel>Davos Registration Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Davos Registration Flow</label>
     <processMetadataValues>
@@ -36,7 +205,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -46,16 +215,197 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Attendee_Record</name>
+        <label>Create Attendee</label>
+        <locationX>708</locationX>
+        <locationY>1166</locationY>
+        <assignRecordIdToReference>CreatedAccountID</assignRecordIdToReference>
+        <connector>
+            <targetReference>Get_Attendee_After_Create</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>CompanyName__c</field>
+            <value>
+                <elementReference>New_CompanyName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>New_FirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>New_LastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonBirthdate</field>
+            <value>
+                <elementReference>New_DOB</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonEmail</field>
+            <value>
+                <elementReference>New_Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Person_Account_RecordTypeId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Create_VIP</name>
+        <label>Create VIP</label>
+        <locationX>180</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Get_VIP_After_Create</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>VIP_FirstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>VIP_LastName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonEmail</field>
+            <value>
+                <elementReference>VIP_Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Person_Account_RecordTypeId.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Attendee_After_Create</name>
+        <label>Get Attendee After Create</label>
+        <locationX>708</locationX>
+        <locationY>1286</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>VerifyProtocols</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CreatedAccountID</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>objAttendee</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>PersonEmail</queriedFields>
+        <queriedFields>PersonBirthdate</queriedFields>
+        <queriedFields>CompanyName__c</queriedFields>
+        <queriedFields>Phone</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Attendee_From_Search</name>
+        <label>Get Attendee From Search</label>
+        <locationX>1012</locationX>
+        <locationY>918</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Attendee_Found_From_Get_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SelectedSearchAccountId</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>objAttendee</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>PersonEmail</queriedFields>
+        <queriedFields>PersonBirthdate</queriedFields>
+        <queriedFields>CompanyName__c</queriedFields>
+        <queriedFields>Phone</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Person_Account_RecordTypeId</name>
+        <label>Get Person Account RecordTypeId</label>
+        <locationX>708</locationX>
+        <locationY>1046</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_Attendee_Record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>SDO_PersonAccounts</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_VIP_After_Create</name>
+        <label>Get VIP After Create</label>
+        <locationX>180</locationX>
+        <locationY>686</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Review_Information</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CreatedAccountID</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>objAttendee</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>PersonEmail</queriedFields>
+        <queriedFields>PersonBirthdate</queriedFields>
+        <queriedFields>CompanyName__c</queriedFields>
+        <queriedFields>Phone</queriedFields>
+    </recordLookups>
     <screens>
         <name>Attendee_Search</name>
         <label>Attendee Search</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>1104</locationX>
+        <locationY>686</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Create_Attendee</targetReference>
+            <targetReference>Attendee_Search_Outcome</targetReference>
         </connector>
         <fields>
             <name>DisplayAttendeeInfo_0_0_0</name>
@@ -66,11 +416,15 @@
             <name>accountSearchDT</name>
             <extensionName>c:Dreampass_AttendeeSearch</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>SelectedSearchAccountId</assignToReference>
                 <name>selectedAccountID</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>CreateNewAttendee</assignToReference>
+                <name>createNewAttendee</name>
             </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
@@ -80,8 +434,8 @@
     <screens>
         <name>Complete</name>
         <label>Complete</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationX>180</locationX>
+        <locationY>1186</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -118,7 +472,7 @@
         </fields>
         <fields>
             <name>dispTextComplete</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿Registration Complete!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;A Dreampass was emailed to &quot;cgilmore@salesforce.com&quot;. Use this to gain access to all Salesforce Spaces.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;﻿Registration Complete!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;A Dreampass was emailed to &quot;&lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&quot;. Use this to gain access to all Salesforce Spaces.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Note: this Dreampass will be valid for 36hrs. &lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0);&quot;&gt;Please ensure to receive an onsite PCR test to extend the Dreampass&lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; for the remainder of the event.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;﻿&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>New Check In</nextOrFinishButtonLabel>
@@ -128,17 +482,17 @@
     <screens>
         <name>Create_Attendee</name>
         <label>Create Attendee</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>708</locationX>
+        <locationY>926</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>VerifyProtocols</targetReference>
+            <targetReference>Get_Person_Account_RecordTypeId</targetReference>
         </connector>
         <fields>
             <name>DisplayAttendeeInfo_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Create New Attendee&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Enter attendee information below&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Create New Attendee&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Make sure to verify with Splash team that this attendee is authorized to be given a Dreampass. Then e&lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;nter attendee information below. &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -160,6 +514,13 @@
                     <fieldText>Last Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>New_Email</name>
+                    <dataType>String</dataType>
+                    <fieldText>Email Address</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -186,6 +547,14 @@
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
+                <fields>
+                    <name>New_SplashId</name>
+                    <dataType>String</dataType>
+                    <fieldText>Splash ID</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;To prevent duplicate attendees from being created, enter the Id of the attendee from Splash (if it exists)&lt;/p&gt;</helpText>
+                    <isRequired>false</isRequired>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -194,13 +563,6 @@
                 </inputParameters>
                 <isRequired>false</isRequired>
             </fields>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>New_Email</name>
-            <dataType>String</dataType>
-            <fieldText>Email Address</fieldText>
-            <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <fields>
@@ -219,10 +581,68 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Create_VIP_Attendee</name>
+        <label>Create VIP Attendee</label>
+        <locationX>180</locationX>
+        <locationY>446</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_VIP</targetReference>
+        </connector>
+        <fields>
+            <name>createVIPText</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Create New VIP&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;E&lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;nter VIP information below to generate a Dreampass instantly&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>VIP_FirstName</name>
+            <dataType>String</dataType>
+            <fieldText>First Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>VIP_LastName</name>
+            <dataType>String</dataType>
+            <fieldText>Last Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>VIP_Email</name>
+            <dataType>String</dataType>
+            <fieldText>Email Address</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Submit</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>1104</locationX>
+        <locationY>1682</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Go Back</backButtonLabel>
+        <fields>
+            <name>DisplayAttendeeInfo_0_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;There&apos;s a Problem&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!strErrorText}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Review_Information</name>
         <label>Review Information</label>
-        <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationX>180</locationX>
+        <locationY>945</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -241,34 +661,9 @@
                 <name>Review_Information_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>First_Name</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <stringValue>Chris</stringValue>
-                    </defaultValue>
-                    <fieldText>First Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Last_Name</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <stringValue>Gilmore</stringValue>
-                    </defaultValue>
-                    <fieldText>Last Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Email</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <stringValue>cgilmore@salesforce.com</stringValue>
-                    </defaultValue>
-                    <fieldText>Email Address</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <name>ReviewDisplayText</name>
+                    <fieldText>&lt;p&gt;Name&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Date of Birth&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonBirthdate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.CompanyName__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -337,13 +732,13 @@
     <screens>
         <name>Scan_QR_Code</name>
         <label>Scan QR Code</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>477</locationX>
+        <locationY>206</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Attendee_Search</targetReference>
+            <targetReference>VIPAccessDecision</targetReference>
         </connector>
         <fields>
             <name>DispTextStart</name>
@@ -360,7 +755,7 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>scanvalue</assignToReference>
@@ -372,15 +767,55 @@
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;No QR Code? Proceed to manual entry.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Manual Entry</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>qrButtonGroup</name>
+            <extensionName>c:Dreampass_FlowButtonGroup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>output1</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input2</name>
+                <value>
+                    <stringValue>VIP Dreampass</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>output2</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input3</name>
+                <value>
+                    <stringValue>Manual Entry</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>output3</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>VIPAccess</assignToReference>
+                <name>output2</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>VerifyProtocols</name>
         <label>Verify Documents</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>708</locationX>
+        <locationY>1453</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -400,7 +835,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>attendeeinfo1</name>
-                    <fieldText>&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;Chris Gilmore&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;DOB:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;Feb 9, 1984&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Date of Birth:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonBirthdate}&lt;/b&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -416,7 +851,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>attendeeinfo2</name>
-                    <fieldText>&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;cgilmore@salesforce.com&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;Salesforce&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96); background-color: rgb(255, 255, 255);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.CompanyName__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -455,8 +890,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
+        <locationX>351</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Scan_QR_Code</targetReference>
         </connector>
@@ -473,6 +908,31 @@
         </value>
     </variables>
     <variables>
+        <name>CreatedAccountID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CreateNewAttendee</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>objAttendee</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
         <name>scanvalue</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -487,6 +947,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>strErrorText</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>VaccineText</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -494,6 +961,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue>Vaccination Verified</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>VIPAccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
 </Flow>

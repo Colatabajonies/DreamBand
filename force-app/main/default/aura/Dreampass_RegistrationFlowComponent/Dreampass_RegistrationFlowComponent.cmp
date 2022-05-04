@@ -1,4 +1,6 @@
 <aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.init}" />
     <aura:attribute name="showStartOverButton" type="Boolean" default="false" />
     

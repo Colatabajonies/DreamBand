@@ -46,6 +46,10 @@ public class Dreampass_AccessChallenge_ctrl
                 List<Account> objAccounts = new List<Account>([SELECT Name, PersonEmail, CompanyName__c, PhotoURL__c, DreampassAccess__c FROM Account Where Id =: objHVs[0].vaxhv__PersonAccount__c LIMIT 1]);
                 if (objAccounts.size() > 0)
                 {
+                    if (String.isNotBlank(locationId))
+                    {
+                        logAccess(objAccounts[0], locationId);
+                    }
                     return objAccounts[0];
                 }
             }

@@ -1,7 +1,6 @@
 ({
     doInit : function(component, event, helper) {
         component.set('v.columns', [
-            {label: 'Id', fieldName:'Id',sortable:true,type:'text'},
             {label: 'Name', fieldName:'Name',sortable:true,type:'text'},
             {label: 'Email', fieldName:'PersonEmail',sortable:true,type:'text'},
             {label: 'Company', fieldName:'CompanyName__c',sortable:true,type:'text'}

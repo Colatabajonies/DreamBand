@@ -31,10 +31,18 @@
     height:550px;
 }
 
+@media screen and (max-width: 1150px) {
+    .THIS .flowcontainer { 
+        width:100%;
+        height:600px;
+        padding:10px;
+    }
+}
 .THIS .slds-radio
 {
     text-align:left;
 }
+
 .THIS .flowruntime-input
 {
     text-align:left;

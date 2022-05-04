@@ -40,6 +40,7 @@
         <members>ApplePassBookDictionary</members>
         <members>DreampassEmailHelper</members>
         <members>Dreampass_AttendeeSearch_Ctrl</members>
+        <members>Dreampass_ScanQRAction</members>
         <name>ApexClass</name>
     </types>
      <types>
@@ -53,6 +54,7 @@
         <members>Dreampass_RegistrationFlow</members>
         <members>Dreampass_RegistrationFlowComponent</members>
         <members>Dreampass_AttendeeSearch</members>
+        <members>Dreampass_FlowButtonGroup</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
