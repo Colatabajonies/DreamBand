@@ -1,0 +1,20 @@
+.THIS 
+{
+}
+
+.THIS .tile
+{
+    border-radius:25px;
+    min-height: 200px;
+    position:relative;
+}
+
+.THIS .middletile
+{
+    width:100%;
+    position:absolute;
+    margin:0;
+    top:50%;
+    transform:translateY(-50%);
+    padding:20px;
+}

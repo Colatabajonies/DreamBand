@@ -1,0 +1,5 @@
+<design:component label="Flow Scanner">
+	<design:attribute name="scanval" label="Scan Value" />
+    <design:attribute name="rfid" label="Scan RFID" />
+    <design:attribute name="camera" label="Scan Camera" />
+</design:component>

@@ -1,0 +1,31 @@
+.THIS 
+{
+    background-color:#EAF5FE;
+    height:100vh;
+    width:100%;
+    padding:20px;
+}
+
+.THIS .contentcontainer
+{
+    text-align:center;
+    width:100%;
+}
+
+.THIS .flowcontainer
+{
+    margin:auto;
+    padding-top:20px;
+    text-align:center;
+    background-color:#FFF;
+    border-radius:20px;
+    width:66%;
+    height:500px;
+}
+
+.THIS .actionButtonBar
+{
+    text-align: center;
+    display: inline-flex;
+    margin-top: 0;
+}

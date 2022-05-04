@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <div>
+        <div class="contentcontainer">
+            <img src="{!$Resource.wefsalesforce}" style="width:250px;margin-bottom:20px;"/>
+            
+            <div class="flowcontainer">
+                <lightning:flow aura:id="flowData" />
+            </div>
+        </div>
+        
+    </div>
+</aura:component>

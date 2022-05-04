@@ -1,0 +1,17 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="staticresource" type="String" default="greencheck"/>
+    <aura:attribute name="backgroundColor" type="String" default="#CDEFC4"/>
+    <aura:attribute name="displayText" type="String" default="Negative COVID-19 Test Verified"/>
+    <div>
+        <div class="tile" style="{!'background-color:' + v.backgroundColor}">
+            <div class="middletile">
+                <div>
+                    <img src="{!$Resource.greencheck}" style="width:40px;margin-bottom:20px;"/>
+                </div>
+                <div>
+                    <lightning:formattedText value="{!v.displayText}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

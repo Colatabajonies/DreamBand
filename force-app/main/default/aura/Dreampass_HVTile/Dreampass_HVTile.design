@@ -1,0 +1,5 @@
+<design:component label="Health Verification Tile">
+	<design:attribute name="staticresource" label="Static Resource Image Name" />
+    <design:attribute name="backgroundColor" label="Hex Code of background color (include #)" />
+    <design:attribute name="displayText" label="Display Text on Tile" />
+</design:component>

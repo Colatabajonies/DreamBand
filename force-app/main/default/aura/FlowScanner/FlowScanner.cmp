@@ -1,0 +1,15 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="scanval" type="String" default=""/>
+    <aura:attribute name="rfid" type="boolean" default="true"/>
+    <aura:attribute name="camera" type="boolean" default="true"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    
+    <c:RFIDReader aura:id="rfidReader" RFIDReadEvent="{!c.handleRFID}"/>
+    
+    <aura:if isTrue="{!v.camera}">
+        <div style="width:100%;text-align:center;padding-top:20px;">
+            <iframe src="/apex/QRScanner_VF" class="iframescan" allow="geolocation; microphone; camera *" allowusermedia='allowusermedia' frameBorder="none"/>
+        </div>
+  </aura:if> 
+</aura:component>

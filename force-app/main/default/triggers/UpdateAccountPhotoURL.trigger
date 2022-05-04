@@ -3,7 +3,7 @@ trigger UpdateAccountPhotoURL on ContentVersion (after insert)
     List<Account> objAccounts = new List<Account>();
     for (ContentVersion cv : Trigger.New)
     {
-        if (cv.Document_Type__c.tolowercase() == 'image' && cv.FirstPublishLocationId != null && ((string)cv.FirstPublishLocationId).startswith('001'))
+        if (cv != null && String.isNotBlank(cv.Title) && cv.FirstPublishLocationId != null && ((string)cv.FirstPublishLocationId).startswith('001'))
         {
             //Get the account and update it
             List<Account> objAccounts2 = new List<Account>([SELECT Id, PhotoURL__c from Account WHERE ID =: cv.FirstPublishLocationId]);
@@ -18,4 +18,5 @@ trigger UpdateAccountPhotoURL on ContentVersion (after insert)
     {
         UPDATE objAccounts;
     }
+    
 }
