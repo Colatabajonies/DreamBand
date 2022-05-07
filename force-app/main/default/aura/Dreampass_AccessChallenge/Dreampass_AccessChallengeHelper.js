@@ -2,7 +2,7 @@
     lookupRFID : function(component, event, helper) 
     {
         this.setLocation(component, event, helper);
-        var action = component.get('c.lookupDreamband'); 
+        var action = component.get('c.getDreampassFromDreambandId'); 
         action.setParams({
             "rfID" : component.get("v.scanval"),
             "locationId" : component.get("v.locationId")
@@ -10,15 +10,17 @@
         action.setCallback(this, function(a){
             var state = a.getState(); // get the response state
             if(state == 'SUCCESS' && a.getReturnValue() != null) {
-                var theAccount = a.getReturnValue();
-                component.set('v.objAccount', theAccount);
-                component.set('v.access', theAccount.DreampassAccess__c);
+                var objDreampass = a.getReturnValue();
+                component.set('v.objAccount', objDreampass.objAccount);
+                component.set('v.access', objDreampass.isValid);
+                component.set('v.reason', objDreampass.inValidReason);
                 component.set("v.Spinner", false);
             }
             else if (state == 'SUCCESS' && a.getReturnValue() == null)
             {
                 component.set('v.objAccount', null);
                 component.set('v.access', false);
+                component.set('v.reason', '');
                 component.set("v.Spinner", false);
             }
                 else
@@ -32,6 +34,7 @@
                     toastEvent.fire();
                     component.set('v.objAccount', null);
                     component.set('v.access', false);
+                    component.set('v.reason', '');
                     component.set("v.Spinner", false);
                 }
         });
@@ -57,6 +60,7 @@
         {
             component.set('v.objAccount', null);
             component.set('v.access', false);
+            component.set('v.reason', '');
             component.set("v.Spinner", false);
             var toastEvent = $A.get("e.force:showToast");
             toastEvent.setParams({
@@ -71,7 +75,7 @@
         
         //Else call apex
         this.setLocation(component, event, helper);
-        var action = component.get('c.lookupDreampass'); 
+        var action = component.get('c.getDreampassFromQR'); 
         action.setParams({
             "qrcode" : component.get("v.scanval"),
             "locationId" : component.get("v.locationId") 
@@ -79,15 +83,18 @@
         action.setCallback(this, function(a){
             var state = a.getState(); // get the response state
             if(state == 'SUCCESS' && a.getReturnValue() != null) {
-                var theAccount = a.getReturnValue();
-                component.set('v.objAccount', theAccount);
-                component.set('v.access', theAccount.DreampassAccess__c);
+                var objDreampass = a.getReturnValue();
+                
+                component.set('v.objAccount', objDreampass.objAccount);
+                component.set('v.access', objDreampass.isValid);
+                component.set('v.reason', objDreampass.inValidReason);
                 component.set("v.Spinner", false);
             }
             else if (state == 'SUCCESS' && a.getReturnValue() == null)
             {
                 component.set('v.objAccount', null);
                 component.set('v.access', false);
+                component.set('v.reason', '');
                 component.set("v.Spinner", false);
             }
                 else
@@ -101,6 +108,7 @@
                     toastEvent.fire();
                     component.set('v.objAccount', null);
                     component.set('v.access', false);
+                    component.set('v.reason', '');
                     component.set("v.Spinner", false);
                 }
         });

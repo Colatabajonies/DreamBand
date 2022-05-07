@@ -1,0 +1,40 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" controller="Dreampass_Helper" >
+    
+    <aura:attribute name="recordId" type="string" default=""/>
+    <aura:attribute name="objAccount" type="Account"/>
+    <aura:attribute name="access" type="boolean" default="false"/>
+    <aura:attribute name="reason" type="string" default=""/>
+    <aura:attribute name="noimageURL" type="string" default="../../../../_slds/images/themes/lightning_blue/lightning_blue_profile_avatar_200.png" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    
+    <div class="">
+        <div class="scancard slds-p-bottom_large slds-p-left_large slds-p-right_large" style="{!v.access ? 'background-color:#59C3B7;' : (!v.objAccount ? 'background-color:#fff;' : 'background-color:#DF7569;')}">
+            <div style="color:white;">
+                
+                <img src="{!v.objAccount.Dreampass_PhotoURL__c == '' || !v.objAccount.Dreampass_PhotoURL__c ? v.noimageURL : v.objAccount.Dreampass_PhotoURL__c}" alt="{!v.objAccount.Name}" style="width:160px;border-radius:20px;border-color:#469AD4;border-width:3px;border-style:solid;margin:10px;"/>
+                
+                <div style="{!v.access || !v.objAccount ? 'display:none' : 'padding-top:15px;padding-bottom:15px;display:inline-flex;'}">
+                    <lightning:icon iconName="action:close" alternativeText="Denied" title="Denied" size="small" />
+                    <div style="display:block;padding-left:10px;text-align:left;"><span style="font-size:1rem;padding-top:10px;">
+                        Invalid Dreampass
+                    </span><br />
+                    {!v.reason}
+                    </div>
+                </div>
+                <div style="{!v.access ? 'padding-top:15px;padding-bottom:15px;display:inline-flex;' : 'display:none'}">
+                    <lightning:icon iconName="action:approval" alternativeText="Granted" title="Granted" size="small" />
+                    <div style="font-size:1rem;padding-top:10px;padding-left:10px;text-align:left;">
+                        Dreampass Active
+                    </div>
+                </div>
+                
+                <div>
+                    <span style="font-size:1.5rem;">{!v.objAccount.Name}
+                    </span>
+                </div>
+                <div><span style="font-size:1rem;">{!v.objAccount.Type}</span></div>
+            </div>
+        </div>
+    </div>
+</aura:component>

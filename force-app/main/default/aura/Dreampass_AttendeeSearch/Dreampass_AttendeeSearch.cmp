@@ -3,28 +3,28 @@
     <aura:attribute name="allData" type="List" />
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="sortedBy" type="String" default="Name"/>
-     <aura:attribute name="sortedDirection" type="string" default="asc" />
+    <aura:attribute name="sortedDirection" type="string" default="asc" />
     <aura:attribute name="selectedAccountID" type="string" default="" />
     <aura:attribute name="createNewAttendee" type="Boolean" default="false" />
     
     <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
     <div>
-    	<table><tr><td style="line-height:0;"><lightning:input type="search" lable="Search" placeholder="Search Attendees" aura:id="SearchBox"
-                         onchange="{!c.searchTable}" style="max-width:350px;padding-left:10px;" />
-            </td><td>
-        <lightning:button variant="brand" label="Create New Attendee" title="Brand action" onclick="{!c.createNewAttendee}" />
-            </td></tr></table>
+        <!--<table><tr><td style="line-height:0;"> -->
+			<lightning:input type="search" lable="Search" placeholder="Search Attendees" aura:id="SearchBox" onchange="{!c.searchTable}" style="max-width:350px;padding-left:10px;" />
+        <!--    </td><td>
+            <lightning:button variant="brand" label="Create New Attendee" title="Brand action" onclick="{!c.createNewAttendee}" />
+            </td></tr></table> -->
     </div>
     <lightning:layout multipleRows="true" horizontalAlign="center">
-            <lightning:layoutItem padding="around-small" size="12">
-                <lightning:datatable keyField="id" data="{! v.recordList}"
-                                     columns="{! v.columns}"
-                                     hideCheckboxColumn="false"
-                                     maxRowSelection="1"
-                                     onsort="{!c.updateSorting}"
-                                     sortedBy="{!v.sortedBy}"
-                                     onrowselection="{!c.rowSelected}"
-                                     sortedDirection="{!v.sortedDirection}"  />
-            </lightning:layoutItem>
+        <lightning:layoutItem padding="around-small" size="12">
+            <lightning:datatable keyField="id" data="{! v.recordList}"
+                                 columns="{! v.columns}"
+                                 hideCheckboxColumn="false"
+                                 maxRowSelection="1"
+                                 onsort="{!c.updateSorting}"
+                                 sortedBy="{!v.sortedBy}"
+                                 onrowselection="{!c.rowSelected}"
+                                 sortedDirection="{!v.sortedDirection}"  />
+        </lightning:layoutItem>
     </lightning:layout>
 </aura:component>

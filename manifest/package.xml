@@ -6,11 +6,13 @@
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Account.PhotoURL__c</members>
-        <members>Account.CompanyName__c</members>
-        <members>Account.Name</members>
-        <members>Account.DreampassAccess__c</members>
-        <members>Account.DreambandID__c</members>
+        <members>Account.Dreampass_PhotoURL__c</members>
+        <members>Account.Dreampass_CompanyName__c</members>
+        <members>Account.Dreampass_DreambandID__c</members>
+        <members>Account.Dreampass_Revoked__c</members>
+        <members>Account.Dreampass_Checkin_Time__c</members>
+        <members>Account.Dreampass_OnsitePCRTestDate__c</members>
+
         <members>DreampassAccessLog__c.Account__c</members>
         <members>DreampassAccessLog__c.Location__c</members>
         <members>DreampassAccessLog__c.Status__c</members>
@@ -28,19 +30,43 @@
         <members>Wallet_Setting__c.Wallet_Certificate_ID__c</members>
         <members>Wallet_Setting__c.Wallet_Certificate_Password__c</members>
         <members>Wallet_Setting__c.Wallet_Resources_ID__c</members>
-        <members>Wallet_Setting__c.Name</members>
+
+
         <name>CustomField</name>
+    </types>
+    <types>
+        <members>SafetyCloudPersonAccountPage</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>PersonAccount-Safety Cloud Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>DreampassAccessLog__c</members>
+        <members>Davos_Registration</members>
+        <members>Dreampass_Scanner_Desktop</members>
+        <members>Dreampass_Scanner_Mobile</members>
+        <name>CustomTab</name>
     </types>
     <types>
         <members>Dreampass_AccessChallenge_ctrl</members>
         <members>captureImageController</members>
         <members>AutoComplete_Ctrl</members>
-        <members>DreamPassWalletController</members>
-        <members>AppleWalletGenerator</members>
-        <members>ApplePassBookDictionary</members>
         <members>DreampassEmailHelper</members>
         <members>Dreampass_AttendeeSearch_Ctrl</members>
         <members>Dreampass_ScanQRAction</members>
+        <members>Dreampass_Helper</members>
+        <members>Dreampass_CovidTestVerified</members>
+        <members>Dreampass_VaxVerifyAction</members>
+        
+        <members>DreamPassWalletController</members>
+        <members>AppleWalletGenerator</members>
+        <members>ApplePassBookDictionary</members>
+        <members>Zippex</members>
+        <members>HexUtil</members>
+        <members>Puff</members>
+        
         <name>ApexClass</name>
     </types>
      <types>
@@ -51,10 +77,12 @@
         <members>AutoComplete</members>
         <members>Dreampass_HVTile</members>
         <members>FlowScanner</members>
+        <members>Dreampass</members>
         <members>Dreampass_RegistrationFlow</members>
         <members>Dreampass_RegistrationFlowComponent</members>
         <members>Dreampass_AttendeeSearch</members>
         <members>Dreampass_FlowButtonGroup</members>
+        <members>Dreampass_Viewer</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
@@ -76,40 +104,10 @@
     </types>
     <types>
         <members>Davos_Registration_Flow</members>
+        <members>Dreampass_UploadImage</members>
         <name>Flow</name>
     </types>
     
-    <!--<types>
-        <members>*</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexComponent</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexPage</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>ApexTestSuite</name>
-    </types>
-    <types>
-        <members>UpdateAccountPhotoURL</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>StaticResource</name>
-    </types> -->
+   
     <version>54.0</version>
 </Package>

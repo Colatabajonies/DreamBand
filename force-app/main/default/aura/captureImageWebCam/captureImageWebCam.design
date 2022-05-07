@@ -1,0 +1,3 @@
+<design:component label="Upload Photo for Account">
+	<design:attribute name="recordId"/>
+</design:component>

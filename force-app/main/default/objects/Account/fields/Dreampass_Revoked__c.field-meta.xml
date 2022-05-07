@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PhotoURL__c</fullName>
+    <fullName>Dreampass_Revoked__c</fullName>
+    <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>PhotoURL</label>
-    <length>255</length>
-    <required>false</required>
+    <label>Dreampass Revoked</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Checkbox</type>
 </CustomField>

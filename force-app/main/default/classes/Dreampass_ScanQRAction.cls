@@ -1,7 +1,7 @@
 public class Dreampass_ScanQRAction 
 {
     @InvocableMethod(label='Get Attendee From Dreampass QR Code')
-    public static List<Account> sendEmail(List<String> requests) 
+    public static List<Account> getAccount(List<String> requests) 
     {
         List<ID> hvIDs = new List<ID>();
         List<ID> accountIDs = new List<ID>();
@@ -31,7 +31,7 @@ public class Dreampass_ScanQRAction
             {
                 accountIds.add(hv.vaxhv__PersonAccount__c);
             }
-            List<Account> objAccounts = new List<Account>([SELECT Name, PersonEmail, PersonBirthDate, Phone, CompanyName__c, PhotoURL__c, DreampassAccess__c FROM Account Where Id IN: accountIds]);
+            List<Account> objAccounts = new List<Account>([SELECT Name, FirstName, LastName, PersonEmail, PersonBirthDate, Dreampass_CompanyName__c, Phone, Type, Dreampass_DreambandID__c, Dreampass_Revoked__c, Dreampass_Checkin_Time__c, Dreampass_OnsitePCRTestDate__c FROM Account Where Id IN: accountIds]);
             if (objAccounts.size() > 0)
             {
                 return objAccounts;

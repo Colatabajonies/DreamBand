@@ -1,0 +1,33 @@
+.THIS  .scancard
+{
+    background-color:#fff;
+    border-radius:4px;
+    border-color:rgb(201, 201, 201);
+    border-width:1px;
+    border-style:solid;
+    overflow:hidden;
+    width:100%;
+    text-align:center;
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-left:10px;
+    padding-right:10px;
+    outline: none;
+}
+
+.THIS .slds-icon_container_circle
+{
+    border-style:solid;
+    border-width:2px;
+    border-color:white;
+}
+
+.THIS .slds-form-element__static
+{
+    color: #fff;
+}
+
+.THIS a:link, .THIS a:visited 
+{
+    color: #fff;
+}

@@ -29,10 +29,12 @@ public class captureImageController {
             cVersion.PathOnClient = recordId+'.png';
             cVersion.Origin = 'H';
             cVersion.OwnerId = UserInfo.getUserId();
-            cVersion.Title = recordId+'.png';
+            cVersion.Title = 'photo';
+            cVersion.FirstPublishLocationId = recordId;
             cVersion.VersionData = EncodingUtil.base64Decode(imageUrl.substring(imageUrl.indexOf(',') + 1));
             Insert cVersion;
             
+            /*
             //After saved the Content Verison, get the ContentDocumentId
             Id conDocument = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:cVersion.Id].ContentDocumentId;
             
@@ -43,7 +45,9 @@ public class captureImageController {
             cDocLink.ShareType = 'I';
             cDocLink.Visibility = 'AllUsers';//AllUsers, InternalUsers, SharedUsers
             Insert cDocLink;
+*/
             return 'success';
+            
             
         }catch(Exception e){
             system.debug('---------- ' + e.getMessage());

@@ -1,6 +1,13 @@
 ({
-    doInit : function(component, event, helper) {
-       
+    doInit : function(component, event, helper) 
+    {
+        if (component.get('v.videoLoaded'))
+        {
+            //Dont load the cam twice
+            return;
+        }
+        
+        component.set('v.videoLoaded', true);
         var width = 400; // scale the photo width to this
         var height = 0; // computed based on the input stream
 
@@ -39,58 +46,72 @@
                 //video.setAttribute('width', width);
                 //video.setAttribute('height', height);
                 //canvas.setAttribute('width', width);
-                //canvas.setAttribute('height', height);
+                //canvas.height = 240;
                 streaming = true;
             }
         }, false);
-        
-        startbutton.addEventListener('click', function(ev){
-            takepicture();
-        }, false);
-        
-        clearbutton.addEventListener('click', function(ev){
-            clearphoto();
-        }, false);
-        
-        
-        clearphoto();
-      
-        function clearphoto() {
-            var context = canvas.getContext('2d');
-            context.fillStyle = "#AAA";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            
+    },
+    
+    takephoto:function(component, event, helper) 
+    {
+        component.set('v.saveDisabled', false);
+        var width = 400; // scale the photo width to this
+        var height = 300; 
+        var photo = document.getElementById('photo');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        if (width && height) {
+            canvas.width = width;
+            canvas.height = height;
+            context.drawImage(video, 0, 0, width, height);
             var data = canvas.toDataURL('image/png');
             photo.setAttribute('src', data);
+        } else {
+            //ClearPhoto
         }
-        
-      	function takepicture() {
-            var context = canvas.getContext('2d');
-            if (width && height) {
-                canvas.width = width;
-                canvas.height = height;
-                context.drawImage(video, 0, 0, width, height);
-                var data = canvas.toDataURL('image/png');
-                photo.setAttribute('src', data);
-            } else {
-                clearphoto();
-            }
-        }
-        
     },
+    
+    clearphoto:function(component, event, helper) 
+    {
+        component.set('v.saveDisabled', true);
+        var photo = document.getElementById('photo');
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        context.fillStyle = "#AAA";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        var data = canvas.toDataURL('image/png');
+        photo.setAttribute('src', data);
+    },
+    
     savePhoto: function(component, event, helper) {
-       	var image = document.getElementById("photo");
+        component.set('v.Spinner', true);
+        
+        var image = document.getElementById("photo");
         var action = component.get('c.saveImageFile'); 
        	action.setParams({
             "imageUrl" : photo.getAttribute('src'),
             "recordId" : component.get('v.recordId')
         });
-        action.setCallback(this, function(a){
-            var state = a.getState(); // get the response state
-            if(state == 'SUCCESS') {
-                component.set('v.sObjList', a.getReturnValue());
+        action.setCallback(this, function(a)
+        {
+            component.set('v.spinner', false);
+            //continue
+            
+            
+            var navigate = component.get("v.navigateFlow");
+            if (navigate)
+            {
+                var availableActions = component.get('v.availableActions');
+                for (var i = 0; i < availableActions.length; i++) {
+                    if (availableActions[i] == "NEXT") {
+                        navigate("NEXT");
+                    } else if (availableActions[i] == "FINISH") {
+                        navigate("FINISH");
+                    }
+                }
             }
         });
         $A.enqueueAction(action);
-	}
+	},
 })

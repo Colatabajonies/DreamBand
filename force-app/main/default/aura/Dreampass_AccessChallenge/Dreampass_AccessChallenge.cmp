@@ -1,16 +1,20 @@
 <aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" controller="Dreampass_AccessChallenge_ctrl">
     
     <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
-    
     <aura:attribute name="Spinner" type="boolean" default="true"/>
-    <aura:attribute name="access" type="boolean" default="false"/>
+    <aura:attribute name="camera" type="boolean" default="false"/>
+
     <aura:attribute name="focuslost" type="boolean" default="false"/>
     <aura:attribute name="scanval" type="String" default=""/>
     <aura:attribute name="device" type="String" default=""/>
     <aura:attribute name="locationId" type="String" default=""/>
+
     <aura:attribute name="objAccount" type="Account"/>
+    <aura:attribute name="access" type="boolean" default="false"/>
+	<aura:attribute name="reason" type="string" default=""/>
+    
     <aura:attribute name="noimageURL" type="string" default="../../_slds/images/themes/lightning_blue/lightning_blue_profile_avatar_200.png" />
-    <aura:attribute name="mobileURL" type="string" default="https://sdodemo-main-166ce2cf6b6-172-180293afdda.force.com/scanner" />
+    <aura:attribute name="mobileURL" type="string" default="#" /> <!--https://sdodemo-main-166ce2cf6b6-172-180293afdda.force.com/scanner/s/?cam=true -->
     
     <div tabindex="0" onfocus="{!c.onfocus}" onfocusout="{!c.onfocusout}" onclick="{!c.clearrfid}">
         <aura:if isTrue="{!v.Spinner}">
@@ -39,44 +43,52 @@
                         <c:AutoComplete aura:id="log-location" label="Log scans to location:" objectApiName="Location" idFieldApiName="Id" valueFieldApiName="Name" maxRecords="10"/>
                     </div>
                     <div style="{!v.device == 'DESKTOP' ? 'display:none;' : ''}">
-                        <a href="{!v.mobileURL}">Click to access mobile component</a>
+                        <a href="{!v.mobileURL}" style="color:#3274CC;">Click to access mobile component</a>
                     </div>
                     
                     
                 </div>
-                <div style="{!v.objAccount ? 'display:none' : (v.scanval == '' ? 'display:none' : 'padding-top:15px;')}">
+                <div style="{!v.objAccount ? 'display:none' : (v.scanval == '' ? 'display:none' : 'padding-top:15px;padding-bottom:15px;')}">
                     <lightning:icon iconName="action:close" alternativeText="Denied" title="Denied" size="large" />
-                    <div style="font-size:2rem;color:white;padding-top:10px;">
+                    <div style="font-size:1rem;color:white;padding-top:10px;">
                         Attendee not found
                     </div>
                     <img src="{!v.noimageURL}" alt="error" style="width:160px;border-radius:20px;border-color:#469AD4;border-width:3px;border-style:solid;margin:10px;"/>
                 </div>
-                <div style="{!v.objAccount ? '' : 'display:none'}">
-                    <div style="{!v.access ? 'display:none' : 'padding-top:15px;'}">
+                <div style="{!v.objAccount ? 'color:white;' : 'display:none'}">
+                    <div style="{!v.access ? 'display:none' : 'padding-top:15px;padding-bottom:15px;'}">
                         <lightning:icon iconName="action:close" alternativeText="Denied" title="Denied" size="large" />
-                        <div style="font-size:2rem;color:white;padding-top:10px;">
+                        <div style="font-size:1rem;padding-top:10px;">
                             Access Denied
                         </div>
+                        {!v.reason}
                     </div>
-                    <div style="{!v.access ? 'padding-top:15px;' : 'display:none'}">
+                    <div style="{!v.access ? 'padding-top:15px;padding-bottom:15px;' : 'display:none'}">
                         <lightning:icon iconName="action:approval" alternativeText="Granted" title="Granted" size="large" />
-                        <div style="font-size:2rem;color:white;padding-top:10px;">
+                        <div style="font-size:1rem;padding-top:10px;">
                             Access Granted
                         </div>
                     </div>
                     
-                    <img src="{!v.objAccount.PhotoURL__c == '' || !v.objAccount.PhotoURL__c ? v.noimageURL : v.objAccount.PhotoURL__c}" alt="{!v.objAccount.Name}" style="width:160px;border-radius:20px;border-color:#469AD4;border-width:3px;border-style:solid;margin:10px;"/>
-                    <lightning:recordViewForm recordId="{!v.objAccount.Id}" objectApiName="Account">
-                        <lightning:outputField fieldName="Name" />
-                        <lightning:outputField fieldName="CompanyName__c" />
-                        <lightning:outputField fieldName="PersonEmail" />
-                    </lightning:recordViewForm>
+                    <img src="{!v.objAccount.Dreampass_PhotoURL__c == '' || !v.objAccount.Dreampass_PhotoURL__c ? v.noimageURL : v.objAccount.Dreampass_PhotoURL__c}" alt="{!v.objAccount.Name}" style="width:160px;border-radius:20px;border-color:#469AD4;border-width:3px;border-style:solid;margin:10px;"/>
+                    
+                    <div>
+                        <span style="font-size:2.1rem;">
+                            <lightning:formattedUrl value="{!'/' + v.objAccount.Id}" tooltip="{!v.objAccount.Name}" label="{!v.objAccount.Name}" target="_self" />
+                        </span>
+                    </div>
+                    <div><span style="font-size:1.3rem;">{!v.objAccount.Type}</span></div>
+                    <div>{!v.objAccount.Dreampass_CompanyName__c}</div>
+                    <div>{!v.objAccount.PersonEmail}</div>
                 </div>
             </div>
             <c:RFIDReader aura:id="rfidReader" RFIDReadEvent="{!c.handleRFID}"/>
-
-        <div class="videocard">
+        
+        
+        <aura:if isTrue="{!v.camera}">
+            <div class="videocard">
                 <iframe src="/apex/QRScanner_VF" class="iframescan" allow="geolocation; microphone; camera *" allowusermedia='allowusermedia' frameBorder="none"/>
-        </div>
+            </div>
+        </aura:if>
     </div>
 </aura:component>

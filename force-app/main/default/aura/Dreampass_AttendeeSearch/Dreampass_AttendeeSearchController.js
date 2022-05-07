@@ -3,7 +3,7 @@
         component.set('v.columns', [
             {label: 'Name', fieldName:'Name',sortable:true,type:'text'},
             {label: 'Email', fieldName:'PersonEmail',sortable:true,type:'text'},
-            {label: 'Company', fieldName:'CompanyName__c',sortable:true,type:'text'}
+            {label: 'Company', fieldName:'Dreampass_CompanyName__c',sortable:true,type:'text'}
         ]);
         helper.getAccounts(component, helper);
     },

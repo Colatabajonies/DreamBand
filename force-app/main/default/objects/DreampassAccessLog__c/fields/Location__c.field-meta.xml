@@ -7,7 +7,7 @@
     <referenceTo>Location</referenceTo>
     <relationshipLabel>Dreampass Access Logs</relationshipLabel>
     <relationshipName>Dreampass_Access_Logs</relationshipName>
-    <required>false</required>
+    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

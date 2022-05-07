@@ -18,7 +18,7 @@ public class DreamPassWalletController
                 conVer.PathOnClient = 'dreampass.pkpass'; // The files name, extension is very important here which will help the file in preview.
                 conVer.Title = 'Dreampass'; // Display name of the files
                 conVer.VersionData = passFile; // converting your binary string to Blog
-                conVer.External_Approved__c = true;
+                //conVer.External_Approved__c = true;
                 conVer.FirstPublishLocationId = request.HVID;
                 insert conVer;    //Insert ContentVersion
                 results.add(conVer.Id);

@@ -1,15 +1,28 @@
 <aura:component controller="captureImageController"  implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="recordId" type="String" default=""/>
+    
     <aura:handler name="render" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="videoLoaded" type="boolean" default="false"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    <aura:attribute name="saveDisabled" type="boolean" default="true"/>
     
-    
-    <lightning:card title="Photo Capture">
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <lightning:card title="">
         <lightning:layout horizontalAlign="spread">
             <lightning:layoutItem padding="around-small">
                 <div class="camera">
                     <video id="video">Video stream not available.</video>
-                    <button id="startbutton" onclick="{!c.doInit}">Take photo</button> 
-                    <button id="clearbutton" onclick="{!c.doInit}">Clear Photo</button> 
                 </div>
+                <lightning:button variant="brand" label="Take Photo" title="Take Photo" onclick="{! c.takephoto }" />
+                <lightning:button variant="destructive" label="Clear Photo" title="Clear Photo" onclick="{! c.clearphoto }" /> 
             </lightning:layoutItem>
             <lightning:layoutItem padding="around-small">
                 <canvas id="canvas">
@@ -17,9 +30,11 @@
             </lightning:layoutItem>
             <lightning:layoutItem padding="around-small">               
                 <div class="output">
-                    <img id="photo"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="The screen capture will appear in this box."/> 
-                    <button id="saveButton" onclick="{!c.savePhoto}">Save photo to record</button> 
+                    <img id="photo"/> <!-- src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" -->
                 </div>
+                <aura:if isTrue="{!!v.saveDisabled}">
+                    <lightning:button variant="brand" disabled="{!v.saveDisabled}" label="Save photo" title="Save photo" onclick="{! c.savePhoto }" />
+                </aura:if>
             </lightning:layoutItem>
         </lightning:layout>
         
