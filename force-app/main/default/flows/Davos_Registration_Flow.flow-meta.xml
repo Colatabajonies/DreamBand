@@ -404,7 +404,7 @@
         <locationX>541</locationX>
         <locationY>1493</locationY>
         <defaultConnector>
-            <targetReference>Review_Information_0</targetReference>
+            <targetReference>Review_Information</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -587,7 +587,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Review_Information_0</targetReference>
+                <targetReference>Review_Information</targetReference>
             </connector>
             <label>All Requirements Met</label>
         </rules>
@@ -633,7 +633,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Review_Information_0</targetReference>
+                <targetReference>Review_Information</targetReference>
             </connector>
             <label>All Requirements Met</label>
         </rules>
@@ -1159,8 +1159,8 @@
     <recordLookups>
         <name>Get_Attendee_After_Create</name>
         <label>Get Attendee After Create</label>
-        <locationX>2329</locationX>
-        <locationY>1324</locationY>
+        <locationX>2279</locationX>
+        <locationY>1281</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Attendee_Type</targetReference>
@@ -1188,6 +1188,7 @@
         <queriedFields>Dreampass_DreambandID__c</queriedFields>
         <queriedFields>FirstName</queriedFields>
         <queriedFields>LastName</queriedFields>
+        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Attendee_From_Search</name>
@@ -1221,6 +1222,7 @@
         <queriedFields>Dreampass_DreambandID__c</queriedFields>
         <queriedFields>FirstName</queriedFields>
         <queriedFields>LastName</queriedFields>
+        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Duplicate_Account</name>
@@ -1296,6 +1298,7 @@
         <queriedFields>Dreampass_DreambandID__c</queriedFields>
         <queriedFields>FirstName</queriedFields>
         <queriedFields>LastName</queriedFields>
+        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Existing_VIP_Attendee</name>
@@ -1329,6 +1332,7 @@
         <queriedFields>Dreampass_DreambandID__c</queriedFields>
         <queriedFields>FirstName</queriedFields>
         <queriedFields>LastName</queriedFields>
+        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Person_Account_RecordTypeId</name>
@@ -1383,6 +1387,7 @@
         <queriedFields>Dreampass_DreambandID__c</queriedFields>
         <queriedFields>FirstName</queriedFields>
         <queriedFields>LastName</queriedFields>
+        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Check_In_Attendee</name>
@@ -1411,8 +1416,8 @@
     <recordUpdates>
         <name>Check_In_Attendee_0</name>
         <label>Check In Attendee and document test</label>
-        <locationX>250</locationX>
-        <locationY>2400</locationY>
+        <locationX>115</locationX>
+        <locationY>2346</locationY>
         <connector>
             <targetReference>Complete</targetReference>
         </connector>
@@ -1444,7 +1449,7 @@
         <locationX>381</locationX>
         <locationY>1820</locationY>
         <connector>
-            <targetReference>Review_Information_0</targetReference>
+            <targetReference>Review_Information</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2046,14 +2051,13 @@
     <screens>
         <name>Review_Information</name>
         <label>Review Information</label>
-        <locationX>711</locationX>
-        <locationY>2084</locationY>
-        <allowBack>true</allowBack>
+        <locationX>736</locationX>
+        <locationY>1906</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <backButtonLabel>Back</backButtonLabel>
         <connector>
-            <targetReference>What_needs_to_be_updated</targetReference>
+            <targetReference>Upload_Profile_Picture</targetReference>
         </connector>
         <fields>
             <name>DisplayAttendeeInfo</name>
@@ -2168,40 +2172,6 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Review_Information_0</name>
-        <label>Review Information</label>
-        <locationX>711</locationX>
-        <locationY>1913</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Review_Information</targetReference>
-        </connector>
-        <fields>
-            <name>displayPhotoUpload</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Upload Profile Picture&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Profile picture for &lt;b&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>uploadPicture</name>
-            <extensionName>c:captureImageWebCam</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>objAttendee.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Skip</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Scan_QR_Code</name>
         <label>Scan QR Code</label>
         <locationX>1181</locationX>
@@ -2281,6 +2251,52 @@
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Upload_Profile_Picture</name>
+        <label>Upload Profile Picture</label>
+        <locationX>739</locationX>
+        <locationY>2127</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>What_needs_to_be_updated</targetReference>
+        </connector>
+        <fields>
+            <name>displayPhotoUpload</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Upload Profile Picture&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Profile picture for &lt;b&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>profilePicSettext</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(218, 105, 105);&quot;&gt;Profile picture already set&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>objAttendee.Dreampass_PhotoURL__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>uploadPicture</name>
+            <extensionName>c:captureImageWebCam</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>objAttendee.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Skip</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>

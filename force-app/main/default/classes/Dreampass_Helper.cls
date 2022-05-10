@@ -1,5 +1,5 @@
 public class Dreampass_Helper 
-{
+{    
     @AuraEnabled
     public static Dreampass getDreampassFromQR(string qrcode)
     {
@@ -77,6 +77,8 @@ public class Dreampass_Helper
     
     public static void SetDreampassValidity(Dreampass objDreampass)
     {
+        integer timewindow = 36;
+        
         Account objAccount = objDreampass.objAccount;
         objDreampass.inValidReason = '';
         objDreampass.isValid = false;
@@ -123,12 +125,37 @@ public class Dreampass_Helper
             return;
         }
         
-        //Finally verify that it hasnt been more than 36 hrs since checkin without PCR being administered
-        if (objAccount.Dreampass_OnsitePCRTestDate__c == null && Datetime.now() > objAccount.Dreampass_Checkin_Time__c.AddHours(36))
+        vaxhv__Health_Verification__c onsiteTest = getOnsitePCRTest(objAccount.Id);
+        //Verify that it hasnt been more than timewindow hrs since checkin without PCR being administered
+        if (onsiteTest == null)
         {
-            objDreampass.inValidReason = 'No onsite PCR 36hrs after check in';
-            objDreampass.isValid = false;
-            return;
+            objDreampass.inValidReason = '(Active until: ' + objAccount.Dreampass_Checkin_Time__c.AddHours(timewindow).format('E h:mm a') + '. No PCR.)';
+            if (Datetime.now() > objAccount.Dreampass_Checkin_Time__c.AddHours(timewindow))
+            {
+                objDreampass.inValidReason = 'Missing onsite PCR test after check in';
+                objDreampass.isValid = false;
+                return;
+            }
+        }
+        
+        //Finally verify that if they have taken their onsite PCR, verify the information
+        if (onsiteTest != null && onsiteTest.vaxhv__HealthVerificationStatus__c != 'Verified')
+        {
+            objDreampass.inValidReason = '(Active until: ' + onsiteTest.safetycloud__TestDateTime__c.AddHours(timewindow).format('E h:mm a') + '. Pending PCR result.)';
+            //If it was rejected...
+            if (onsiteTest.vaxhv__HealthVerificationStatus__c == 'Rejected')
+            {
+                objDreampass.inValidReason = 'Onsite PCR test rejected';
+                objDreampass.isValid = false;
+                return;
+            }
+            //Else if we haven't received results in time
+            else if (Datetime.now() > onsiteTest.safetycloud__TestDateTime__c.AddHours(timewindow))
+            {
+                objDreampass.inValidReason = 'Onsite PCR test results missing';
+                objDreampass.isValid = false;
+                return;                
+            }
         }
         
         //if all these pass, the Dreampass is valid
@@ -153,6 +180,28 @@ public class Dreampass_Helper
             return true;
         }
         return false;
+    }
+    
+    public static boolean AccountHasVerifiedNegOnsitePCRTest(id accountId)
+    {
+        string occuranceId = 'onsitepcr';
+        Integer verifiedtestCount = [SELECT count() FROM vaxhv__Health_Verification__c WHERE safetycloud__OccurrenceId__c =: occuranceId AND vaxhv__PersonAccount__c = :accountId AND vaxhv__HealthVerificationMethod__c =: 'Negative COVID-19 test' AND vaxhv__HealthVerificationStatus__c =: 'Verified'];
+        if (verifiedtestCount > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    
+    public static vaxhv__Health_Verification__c getOnsitePCRTest(id accountId)
+    {
+        string occuranceId = 'onsitepcr';
+        List<vaxhv__Health_Verification__c> objHvs = New List<vaxhv__Health_Verification__c>([SELECT Id, vaxhv__HealthVerificationDocumentDate__c, vaxhv__HealthVerificationStatus__c, safetycloud__TestDateTime__c FROM vaxhv__Health_Verification__c WHERE safetycloud__OccurrenceId__c =: occuranceId AND vaxhv__PersonAccount__c = :accountId AND vaxhv__HealthVerificationMethod__c =: 'Negative COVID-19 test']);
+        if (objHvs.size() > 0)
+        {
+            return objHVs[0];
+        }
+        return null;
     }
     
     public Class Dreampass

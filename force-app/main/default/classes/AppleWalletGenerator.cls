@@ -15,40 +15,6 @@ global class AppleWalletGenerator {
 		resourceBlob = [Select VersionData from ContentVersion where ContentDocumentId=:ws.Wallet_Resources_ID__c LIMIT 1].VersionData;
 	}
 
-	public returnMessage sendPassByEmail(String emailID, Blob passFile){
-		returnMessage ret = new returnMessage();
-		ret.success = true;
-		ret.message = 'Email Successfully Sent';
-		try{
-			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-			
-			List<String> sendTo = new List<String>();
-			sendTo.add(emailID);
-
-			List<Messaging.EmailFileAttachment> atts = new List<Messaging.EmailFileAttachment>();
-			Messaging.EmailFileAttachment att = new Messaging.EmailFileAttachment();
-			att.setBody(passFile);
-			att.setFileName('Pass.pkpass');
-			att.setInline(true);
-			atts.add(att);
-
-			email.setPlainTextBody('Pass file enclosed');
-			email.setSubject('Sample apple wallet pass');
-			email.setToAddresses(sendTo);
-			email.setFileAttachments(atts);
-
-			emails.add(email);
-			Messaging.sendEmail(emails);	
-			}catch(Exception e){
-				ret.success = false;
-				ret.message = 'Error in sending email - ' + e.getMessage() + 'at Line number ' + e.getLineNumber();
-			}
-		
-
-		return ret;
-	}
-
 	public Blob getpkpassFile(string pass, Blob resourceBlob){
 		Zippex zipFile = new Zippex(resourceBlob);
 		Set <String> fileNames = zipFile.getFileNames();
@@ -57,6 +23,7 @@ global class AppleWalletGenerator {
 		hashes.put('pass.json',EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',passBlob)));
 		for (String fileName : fileNames)
 		{
+            //system.debug('in loop for file:' + fileName);
 			if( !fileName.startsWith('__MACOSX') && 
 				!fileName.startsWith('.DS_Store') &&
 				!fileName.endsWith('/')){
@@ -80,7 +47,8 @@ global class AppleWalletGenerator {
 		
 		Blob passCertBlob= [Select VersionData from ContentVersion where ContentDocumentId=:ws.Wallet_Certificate_ID__c LIMIT 1].VersionData;
 		Blob caCertBlob= [Select VersionData from ContentVersion where ContentDocumentId=:ws.Apple_Certificate_ID__c LIMIT 1].VersionData;
-
+        
+        //system.debug('Getting signature...');
 		String url = ws.SignGeneratorAPIURL__c;
 		Http h = new Http();
 	    HttpRequest req = new HttpRequest();
@@ -95,7 +63,7 @@ global class AppleWalletGenerator {
         system.debug('manifestJSON:' + manifestJSON);
         req.setTimeout(20000);
 	    HttpResponse res = h.send(req);
-        system.debug('Heroku response:' + res.getStatus());
+        //system.debug('Heroku response:' + res.getStatus());
 	    return res.getBodyAsBlob();
 
 	}

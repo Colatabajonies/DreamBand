@@ -21,13 +21,14 @@ public class DreamPassWalletController
                 //conVer.External_Approved__c = true;
                 conVer.FirstPublishLocationId = request.HVID;
                 insert conVer;    //Insert ContentVersion
-                results.add(conVer.Id);
+                //results.add(conVer.Id);
                 system.debug('Inserted ConVersion');
                 // First get the content document Id from ContentVersion
                 Id conDoc = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:conVer.Id].ContentDocumentId;
                 //Create ContentDocumentLink
-                ContentDocumentLink cDe = [SELECT Visibility FROM ContentDocumentLink WHERE LinkedEntityId=: request.HVID AND ContentDocumentId =: conDoc LIMIT 1];
+                ContentDocumentLink cDe = [SELECT ID, Visibility FROM ContentDocumentLink WHERE LinkedEntityId=: request.HVID AND ContentDocumentId =: conDoc LIMIT 1];
                 cDe.Visibility = 'AllUsers';
+                results.add(cDe.Id);
                 UPDATE cDe;
             }
         }
@@ -50,14 +51,18 @@ public class DreamPassWalletController
     }
     
     public static Blob getDreamPassBlob(string passtype, String Name, string sn, String qr)
-    {        
+    {
+        //system.debug('Generating Dreampass Blob');
         AppleWalletGenerator gen = new AppleWalletGenerator();
         String pass;
         Blob passData;
+        //system.debug('Getting Settings');
         gen.getWalletSettings(passtype);
+        //system.debug('Getting JSON');
         pass = createDreampassJSON(gen.ws, Name, sn, qr);
+        //system.debug('Generating Resource Blob');
         gen.getResourceBlob();
-        
+        //system.debug('Generating Passkey file');
         passData = gen.getpkpassFile(pass,gen.resourceBlob);
         
         return passData;

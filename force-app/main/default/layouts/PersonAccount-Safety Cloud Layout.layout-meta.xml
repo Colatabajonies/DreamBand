@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -164,6 +165,7 @@
         <fields>NAME</fields>
         <fields>vaxhv__HealthVerificationMethod__c</fields>
         <fields>vaxhv__HealthVerificationStatus__c</fields>
+        <fields>safetycloud__OccurrenceId__c</fields>
         <fields>vaxhv__HealthVerificationDocumentDate__c</fields>
         <relatedList>vaxhv__Health_Verification__c.vaxhv__PersonAccount__c</relatedList>
         <sortField>vaxhv__HealthVerificationDocumentDate__c</sortField>

@@ -59,6 +59,7 @@
         <members>Dreampass_Helper</members>
         <members>Dreampass_CovidTestVerified</members>
         <members>Dreampass_VaxVerifyAction</members>
+        <members>Dreampass_BulkEmailSender</members>
         
         <members>DreamPassWalletController</members>
         <members>AppleWalletGenerator</members>
@@ -95,6 +96,10 @@
         <name>StaticResource</name>
     </types>
     <types>
+        <members>Safety_Cloud_Administrator</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
         <members>UpdateAccountPhotoURL</members>
         <name>ApexTrigger</name>
     </types>
@@ -105,6 +110,8 @@
     <types>
         <members>Davos_Registration_Flow</members>
         <members>Dreampass_UploadImage</members>
+        <members>Health_Verification_Status_Change_Email_Flow</members>
+        <members>Dreampass_Extend_Onsite_PCR_Time</members>
         <name>Flow</name>
     </types>
     
