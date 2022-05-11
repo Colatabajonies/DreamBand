@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Email 3b: Pre-Travel Test Results Verification (REJECTED)</name>
+    <style>none</style>
+    <subject>[Action Required] Your Pre-Travel COVID-19 test result has been rejected</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

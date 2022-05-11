@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Email 1: Reg Confirmation / Upload your Health Information</name>
+    <style>none</style>
+    <subject>[Action Required]: COVID-19 Protocol for attending a Salesforce event at WEF</subject>
+    <textOnly>Hi {!relatedTo.Name},
+Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
+
+It&apos;s time to upload your proof of COVID-19 vaccination including a Booster Shot to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe.
+
+Submit Health Information
+
+Questions? Please reach out to davos@salesforce.com.
+
+Thanks,
+Salesforce Davos Team
+
+Please note that any handling of your personal data will be done in accordance with the Salesforce Privacy Statement.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

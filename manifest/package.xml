@@ -60,6 +60,7 @@
         <members>Dreampass_CovidTestVerified</members>
         <members>Dreampass_VaxVerifyAction</members>
         <members>Dreampass_BulkEmailSender</members>
+        <members>Dreampass_LabHelper</members>
         
         <members>DreamPassWalletController</members>
         <members>AppleWalletGenerator</members>
@@ -108,10 +109,23 @@
         <name>ApexPage</name>
     </types>
     <types>
+        <members>Safety_Cloud_Emails/Email_1_Reg_Confirmation_Upload_your_Health_Information</members>
+        <members>Safety_Cloud_Emails/Email_2_Vaccine_Verification_Upload_Received</members>
+        <members>Safety_Cloud_Emails/Email_2a_Vaccine_Verification_Results_ACCEPTED</members>
+        <members>Safety_Cloud_Emails/Email_2b_Vaccine_Verification_Results_REJECTED</members>
+        <members>Safety_Cloud_Emails/Email_3_Safety_Cloud_Test_Result_Upload_Complete</members>
+        <members>Safety_Cloud_Emails/Email_3a_Pre_Travel_test_Results_Verified_ACCEPTED</members>
+        <members>Safety_Cloud_Emails/Email_3b_Pre_Travel_Test_Results_Verification_REJECTED</members>
+        <members>Safety_Cloud_Emails/Email_4_Dreampass_Email</members>
+        <members>Safety_Cloud_Emails/Email_5_Dreampass_REVOKED</members>
+        <name>EmailTemplate</name>
+    </types>
+    <types>
         <members>Davos_Registration_Flow</members>
         <members>Dreampass_UploadImage</members>
         <members>Health_Verification_Status_Change_Email_Flow</members>
         <members>Dreampass_Extend_Onsite_PCR_Time</members>
+        <members>Dreampass_ProcessLabImport</members>
         <name>Flow</name>
     </types>
     

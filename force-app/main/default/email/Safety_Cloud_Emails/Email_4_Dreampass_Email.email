@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <style type="text/css">
+            @media only screen and (max-width: 480px) {
+              .container {width: 100% !important;}
+              .footer { width:auto !important; margin-left:0; }
+            }
+            @media only screen and (max-width: 640px) {
+              .container { width:100% !important; }
+            }
+          </style>
+    </head>
+    <body bgcolor="#f5f2f2" text="#000000" style="-webkit-text-size-adjust:none;background-color : #F5F2F2; font-family : Arial, helvetica, sans-serif; line-height : 150%; font-size : 16px; color : #222222; padding : 0px; ">
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+            <tbody><tr>
+              <td colspan="3" align="center" valign="top" style="padding-bottom: 10px;">
+              </td>
+            </tr>
+            <tr>
+              <td style="min-width: 20px;">&nbsp;</td>
+              <td align="center">
+                <table cellspacing="0" cellpadding="0" border="0" width="640" class="container" align="center" style="background-color:#fff;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYR&oid=00D8b00000294BD&lastMod=1652224266000" width="100%"/>
+                                <div style="padding: 20px 20px 0px; text-align: center;">
+                                    <i>-Please do not forward-</i>
+                                </div>
+                                <div style="padding:20px;line-height:150%;">
+                                    Hi {!Contact.Name},<br /><br />
+                                        <b>VERIFIED</b><br /><br />
+Consider this your digital pass.  
+<b>This pass will remain valid for the duration of the event assuming your onsite PCR test results come back negative.</b>
+<br /><br />
+<img src="{!vaxhv__Health_Verification__c.safetycloud__QRCodeURL__c}" align=center/>
+<br /><br />
+Please be ready to show this QR code to enter any Salesforce event space.
+<br /><br />
+(If you haven’t already, please make sure to take an onsite PCR test within 24hrs of registration, otherwise your Dreampass will be revoked).
+
+
+                                </div>
+
+
+                                <!-- footer -->
+                                <div style="padding:20px;line-height:150%;">
+                                       
+
+
+
+                                </div>
+
+
+
+
+                                <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYb&oid=00D8b00000294BD&lastMod=1651874034000" width="100%"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              </td>
+              <td style="min-width: 20px;">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+          <div style="white-space: nowrap; font: 15px courier; color: #f5f2f2; background-color: #f5f2f2;">
+            End of the email
+            </div>
+    </body>
+</html>

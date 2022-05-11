@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <style type="text/css">
+            @media only screen and (max-width: 480px) {
+              .container {width: 100% !important;}
+              .footer { width:auto !important; margin-left:0; }
+            }
+            @media only screen and (max-width: 640px) {
+              .container { width:100% !important; }
+            }
+          </style>
+    </head>
+    <body bgcolor="#f5f2f2" text="#000000" style="-webkit-text-size-adjust:none;background-color : #F5F2F2; font-family : Arial, helvetica, sans-serif; line-height : 150%; font-size : 16px; color : #222222; padding : 0px; ">
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+            <tbody><tr>
+              <td colspan="3" align="center" valign="top" style="padding-bottom: 10px;">
+              </td>
+            </tr>
+            <tr>
+              <td style="min-width: 20px;">&nbsp;</td>
+              <td align="center">
+                <table cellspacing="0" cellpadding="0" border="0" width="640" class="container" align="center" style="background-color:#fff;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYR&oid=00D8b00000294BD&lastMod=1652224266000" width="100%"/>
+                                <div style="padding: 20px 20px 0px; text-align: center;">
+                                    <i>-Please do not forward-</i>
+                                </div>
+                                <div style="padding:20px;line-height:150%;">
+                                    Hi {!Contact.Name},<br /><br />
+                                        
+
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+<br /><br />
+Upon review, <b>your pre-travel COVID-19 test was not accepted. </b>Your pre-travel test result was rejected because: {!vaxhv__Health_Verification__c.vaxhv__RejectedReason__c}
+<br /><br />
+Check Your Status <a href="#">here</a>
+Health Verification ID: {!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
+<br /><br />
+<b>A few upload tips:</b> please make sure the image is not blurry, includes identification, and the date input on Safety Cloud matches the test result.
+
+
+
+
+
+                                </div>
+                                <!-- footer -->
+                                <div style="padding:20px;line-height:150%;">
+                                        Questions? Please reach out to <a href="mailto:davos@salesforce.com">davos@salesforce.com</a>.
+                                        <br /><br />
+                                        Please note that any handling of your personal data will be done in accordance with the <a href="https://www.salesforce.com/company/privacy/">Salesforce Privacy Statement</a>. 
+                                </div>
+                                <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYb&oid=00D8b00000294BD&lastMod=1651874034000" width="100%"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              </td>
+              <td style="min-width: 20px;">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+          <div style="white-space: nowrap; font: 15px courier; color: #f5f2f2; background-color: #f5f2f2;">
+            End of the email
+            </div>
+    </body>
+</html>

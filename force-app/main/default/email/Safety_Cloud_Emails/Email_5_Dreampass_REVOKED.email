@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <style type="text/css">
+            @media only screen and (max-width: 480px) {
+              .container {width: 100% !important;}
+              .footer { width:auto !important; margin-left:0; }
+            }
+            @media only screen and (max-width: 640px) {
+              .container { width:100% !important; }
+            }
+          </style>
+    </head>
+    <body bgcolor="#f5f2f2" text="#000000" style="-webkit-text-size-adjust:none;background-color : #F5F2F2; font-family : Arial, helvetica, sans-serif; line-height : 150%; font-size : 16px; color : #222222; padding : 0px; ">
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+            <tbody><tr>
+              <td colspan="3" align="center" valign="top" style="padding-bottom: 10px;">
+              </td>
+            </tr>
+            <tr>
+              <td style="min-width: 20px;">&nbsp;</td>
+              <td align="center">
+                <table cellspacing="0" cellpadding="0" border="0" width="640" class="container" align="center" style="background-color:#fff;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYR&oid=00D8b00000294BD&lastMod=1652224266000" width="100%"/>
+                                <div style="padding: 20px 20px 0px; text-align: center;">
+                                    <i>-Please do not forward-</i>
+                                </div>
+                                <div style="padding:20px;line-height:150%;">
+                                    Hi {!Contact.Name},<br /><br />
+                                        To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+<br /><br />
+Because we have not received documentation of your onsite PCR test within 24hrs of check in, your <b>Dreampass has been temporarily revoked.</b> 
+<br /><br />
+Next Steps: Please stop by the Salesforce Welcome center to get an onsite COVID-19 PCR test. That will re-activate your Dreampass.
+<br /><br />
+The Salesforce Welcome Center is located at: *Promenade, Davos Platz from Monday - Wednesday from 7 a.m. - 8 p.m. CET*
+
+
+
+                                </div>
+
+
+                                <!-- footer -->
+                                <div style="padding:20px;line-height:150%;">
+                                       
+
+
+
+                                </div>
+
+
+
+
+                                <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYb&oid=00D8b00000294BD&lastMod=1651874034000" width="100%"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              </td>
+              <td style="min-width: 20px;">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+          <div style="white-space: nowrap; font: 15px courier; color: #f5f2f2; background-color: #f5f2f2;">
+            End of the email
+            </div>
+    </body>
+</html>
