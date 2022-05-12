@@ -42,9 +42,9 @@
                     <div style="text-align:left;">
                         <c:AutoComplete aura:id="log-location" label="Log scans to location:" objectApiName="Location" idFieldApiName="Id" valueFieldApiName="Name" maxRecords="10"/>
                     </div>
-                    <div style="{!v.device == 'DESKTOP' ? 'display:none;' : ''}">
+                    <!--<div style="{!v.device == 'DESKTOP' ? 'display:none;' : ''}">
                         <a href="{!v.mobileURL}" style="color:#3274CC;">Click to access mobile component</a>
-                    </div>
+                    </div> -->
                     
                     
                 </div>

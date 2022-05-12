@@ -3,6 +3,7 @@
     <types>
         <members>DreampassAccessLog__c</members>
         <members>Wallet_Setting__c</members>
+        <members>LabData__c</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -16,6 +17,21 @@
         <members>DreampassAccessLog__c.Account__c</members>
         <members>DreampassAccessLog__c.Location__c</members>
         <members>DreampassAccessLog__c.Status__c</members>
+
+        <members>LabData__c.Birth_date__c</members>
+        <members>LabData__c.City__c</members>
+        <members>LabData__c.Country__c</members>
+        <members>LabData__c.EMail__c</members>
+        <members>LabData__c.First_name__c</members>
+        <members>LabData__c.isProcessed__c</members>
+        <members>LabData__c.Last_name__c</members>
+        <members>LabData__c.Mobile_number__c</members>
+        <members>LabData__c.Postal_code__c</members>
+        <members>LabData__c.Sampling_date__c</members>
+        <members>LabData__c.Sampling_time__c</members>
+        <members>LabData__c.Street_No__c</members>
+        <members>LabData__c.Test_Antigen_PCR__c</members>
+        <members>LabData__c.Test_result__c</members>
 
         <members>Wallet_Setting__c.Apple_Certificate_ID__c</members>
         <members>Wallet_Setting__c.EventName__c</members>
@@ -47,6 +63,7 @@
         <members>Davos_Registration</members>
         <members>Dreampass_Scanner_Desktop</members>
         <members>Dreampass_Scanner_Mobile</members>
+        <members>LabData__c</members>
         <name>CustomTab</name>
     </types>
     <types>
@@ -109,6 +126,16 @@
         <name>ApexPage</name>
     </types>
     <types>
+        <members>Screen_Shot_20220505_at_112421_AM1</members>
+        <members>Screen_Shot_20220505_at_112421_AM2</members>
+        <name>ContentAsset</name>
+    </types>
+    <types>
+        <members>Safety_Cloud</members>
+        <members>Safety_Cloud_Mobile</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
         <members>Safety_Cloud_Emails/Email_1_Reg_Confirmation_Upload_your_Health_Information</members>
         <members>Safety_Cloud_Emails/Email_2_Vaccine_Verification_Upload_Received</members>
         <members>Safety_Cloud_Emails/Email_2a_Vaccine_Verification_Results_ACCEPTED</members>
@@ -126,6 +153,7 @@
         <members>Health_Verification_Status_Change_Email_Flow</members>
         <members>Dreampass_Extend_Onsite_PCR_Time</members>
         <members>Dreampass_ProcessLabImport</members>
+        <members>Generate_Apple_Wallet_Pass_from_Check_in</members>
         <name>Flow</name>
     </types>
     

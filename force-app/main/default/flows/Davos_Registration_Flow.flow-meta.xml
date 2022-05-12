@@ -876,6 +876,12 @@
             <targetReference>Update_Record_for_QR_0</targetReference>
         </connector>
         <inputAssignments>
+            <field>Company__c</field>
+            <value>
+                <elementReference>objAttendee.Dreampass_CompanyName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>vaxhv__EmailToReceiveNotifications__c</field>
             <value>
                 <elementReference>objAttendee.PersonEmail</elementReference>
@@ -959,6 +965,12 @@
             <targetReference>Update_Record_for_QR</targetReference>
         </connector>
         <inputAssignments>
+            <field>Company__c</field>
+            <value>
+                <stringValue>VIP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>vaxhv__EmailToReceiveNotifications__c</field>
             <value>
                 <elementReference>objAttendee.PersonEmail</elementReference>
@@ -1041,6 +1053,12 @@
         <connector>
             <targetReference>Update_Record_for_QR_0_0</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Company__c</field>
+            <value>
+                <elementReference>objAttendee.Dreampass_CompanyName__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>vaxhv__EmailToReceiveNotifications__c</field>
             <value>
@@ -1416,8 +1434,8 @@
     <recordUpdates>
         <name>Check_In_Attendee_0</name>
         <label>Check In Attendee and document test</label>
-        <locationX>115</locationX>
-        <locationY>2346</locationY>
+        <locationX>250</locationX>
+        <locationY>2400</locationY>
         <connector>
             <targetReference>Complete</targetReference>
         </connector>
