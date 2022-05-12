@@ -30,37 +30,31 @@
                                 </div>
                                 <div style="padding:20px;line-height:150%;">
                                     Hi {!Contact.Name},<br /><br />
-                                        
-
-To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+                                        To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
 <br /><br />
-Upon review, <b>your COVID-19 vaccination record was not accepted. </b>Your vaccination record was rejected because: {!vaxhv__Health_Verification__c.vaxhv__RejectedReason__c}
+Upon arrival at Davos, your health status documentation will need to be verified by Salesforce Safety Cloud at the Salesforce Welcome Center (81 Promenade, Davos Platz) in order to enter Salesforce event spaces. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe. Required documentation includes:
 <br /><br />
-If you think this decision was made in error, please respond to this email (<a href="mailto:davos@salesforce.com">davos@salesforce.com</a>) with your concern. You can also come visit us at the Salesforce Welcome Center with your vaccination card. 
-
-<br /><br />
-Salesforce welcome center is located at: <b>81 Promenade, Davos Platz</b><br />
-<div style="padding-left:20px;">* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET<br/>
-* Wednesday from 6:30 a.m. - 11:59 p.m. CET</div>
-
-<br />
-Check your status <a href="#">here</a><br />
-Health Verification ID: {!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
-<br />
-
-
-
+<div style="padding-left:20px;">* Proof of Vaccination including Booster (for Salesforce guests)<br />
+* Proof of negative Covid test (for all persons in Salesforce space)</div>
 
 
                                 </div>
+
+
                                 <!-- footer -->
                                 <div style="padding:20px;line-height:150%;">
-                                        Questions? Please reach out to <a href="mailto:davos@salesforce.com">davos@salesforce.com</a>.
-                                        <br /><br />
+                                      Questions? Stop by the Salesforce Welcome Center located at: <b>81 Promenade, Davos Platz</b><br />
+<div style="padding-left:20px;">* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET<br/>
+* Wednesday from 6:30 a.m. - 11:59 p.m. CET</div> 
+<br /><br />
 Thanks,<br />
-Salesforce Davos Team<br /><br />
+Salesforce Davos Team
+<br /><br />
                                         Please note that any handling of your personal data will be done in accordance with the <a href="https://www.salesforce.com/company/privacy/">Salesforce Privacy Statement</a>. 
+
+
                                 </div>
+
                                 <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYb&oid=00D8b00000294BD&lastMod=1651874034000" width="100%"/>
                             </td>
                         </tr>

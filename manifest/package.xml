@@ -145,6 +145,7 @@
         <members>Safety_Cloud_Emails/Email_3b_Pre_Travel_Test_Results_Verification_REJECTED</members>
         <members>Safety_Cloud_Emails/Email_4_Dreampass_Email</members>
         <members>Safety_Cloud_Emails/Email_5_Dreampass_REVOKED</members>
+        <members>Safety_Cloud_Emails/Email_4b_NO_Dreampass</members>
         <name>EmailTemplate</name>
     </types>
     <types>

@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Email 3b: Pre-Travel Test Results Verification (REJECTED)</name>
     <style>none</style>
-    <subject>[Action Required] Your Pre-Travel COVID-19 test result has been rejected</subject>
+    <subject>[Action Required] Your pre-travel COVID-19 test result has been rejected</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

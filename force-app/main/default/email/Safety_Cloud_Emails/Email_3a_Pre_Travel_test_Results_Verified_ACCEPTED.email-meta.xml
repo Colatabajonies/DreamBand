@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Email 3a: Pre-Travel test Results Verified (ACCEPTED)</name>
     <style>none</style>
-    <subject>Your COVID-19 Pre-Travel test result has been verified for Salesforce at Davos</subject>
+    <subject>Your COVID-19 pre-travel test result has been verified for Salesforce at Davos</subject>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Email 1: Reg Confirmation / Upload your Health Information</name>
     <style>none</style>
-    <subject>[Action Required]: COVID-19 Protocol for attending a Salesforce event at WEF</subject>
+    <subject>[Action Required]: COVID-19 Protocol for attending a Salesforce event in Davos</subject>
     <textOnly>Hi {!relatedTo.Name},
 Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
 

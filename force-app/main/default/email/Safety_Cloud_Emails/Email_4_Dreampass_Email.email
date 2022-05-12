@@ -31,14 +31,17 @@
                                 <div style="padding:20px;line-height:150%;">
                                     Hi {!Contact.Name},<br /><br />
                                         <b>VERIFIED</b><br /><br />
-Consider this your digital pass.  
-<b>This pass will remain valid for the duration of the event assuming your onsite PCR test results come back negative.</b>
-<br /><br />
 <img src="{!vaxhv__Health_Verification__c.safetycloud__QRCodeURL__c}" align=center/>
 <br /><br />
-Please be ready to show this QR code to enter any Salesforce event space.
+Consider this your digital pass.<br />  
+<b>This pass will only remain valid if you complete an onsite PCR at the testing center within 24hrs from now.</b>
 <br /><br />
-(If you haven’t already, please make sure to take an onsite PCR test within 24hrs of registration, otherwise your Dreampass will be revoked).
+<b>Action Required:</b> If you haven’t already, please make sure to take an onsite PCR test within 24hrs of registration, otherwise your Dreampass it will expire.
+<br /><br />
+
+Please be ready to show this QR code to enter any Salesforce event space.
+
+
 
 
                                 </div>
@@ -46,14 +49,17 @@ Please be ready to show this QR code to enter any Salesforce event space.
 
                                 <!-- footer -->
                                 <div style="padding:20px;line-height:150%;">
-                                       
-
+                                      For further assistance, you can visit us at the Salesforce Welcome Center located at: <b>81 Promenade, Davos Platz</b><br />
+<div style="padding-left:20px;">* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET<br/>
+* Wednesday from 6:30 a.m. - 11:59 p.m. CET</div> 
+<br /><br />
+Thanks,<br />
+Salesforce Davos Team
+<br /><br />
+                                        Please note that any handling of your personal data will be done in accordance with the <a href="https://www.salesforce.com/company/privacy/">Salesforce Privacy Statement</a>. 
 
 
                                 </div>
-
-
-
 
                                 <img src="https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYb&oid=00D8b00000294BD&lastMod=1651874034000" width="100%"/>
                             </td>

@@ -2,9 +2,9 @@
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <available>true</available>
     <encodingKey>UTF-8</encodingKey>
-    <name>Email 5: Dreampass REVOKED</name>
+    <name>Email 4b: NO Dreampass</name>
     <style>none</style>
-    <subject>[ACTION REQUIRED]: Your Davos Dreampass has expired</subject>
+    <subject>[Action Required]: Salesforce Check in at Davos</subject>
     <textOnly>Hi {!relatedTo.Name},
 Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
 

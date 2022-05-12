@@ -38,7 +38,7 @@ To ensure the health and safety of our in-person attendees, and the community at
 <br /><br />
 Once the test result verification process is complete, you’ll receive an email with a status update. 
 <br /><br />
-Check Your Status <a href="#">here</a>
+Check your status <a href="#">here</a>
 <br />
 Health Verification ID: {!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
 <br />
@@ -52,7 +52,10 @@ Health Verification ID: {!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
                                 <div style="padding:20px;line-height:150%;">
                                         Questions? Please reach out to <a href="mailto:davos@salesforce.com">davos@salesforce.com</a>.
                                         <br /><br />
-                                        We can't wait to see you in Davos!
+                                        We look forward to welcoming you safely in Davos!
+                                        <br /><br />
+Thanks,<br />
+Salesforce Davos Team
                                         <br /><br />
                                         Please note that any handling of your personal data will be done in accordance with the <a href="https://www.salesforce.com/company/privacy/">Salesforce Privacy Statement</a>. 
                                 </div>

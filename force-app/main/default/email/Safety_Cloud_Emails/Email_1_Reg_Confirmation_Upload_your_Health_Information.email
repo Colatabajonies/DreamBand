@@ -30,9 +30,15 @@
                                 </div>
                                 <div style="padding:20px;line-height:150%;">
                                     Hi {!Contact.Name},<br /><br />
-                                        Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
+                                        To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
                                         <br /><br />
-                                        It's time to upload your proof of COVID-19 vaccination including a Booster Shot to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe.
+                                        <b>Action Required:</b> Please upload your health status documentation to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe. Required documentation includes:<br /><br />
+
+<span style="padding-left:15px;">* Proof of Vaccination including Booster (for Salesforce guests)</span><br />
+<span style="padding-left:15px;">* Proof of negative Covid test (for all persons in Salesforce space)</span><br /><br />
+
+To expedite the onsite check in process, this can be done in advance before arriving onsite by using the Safety Cloud portal below:
+
                                         <br /><br />
                                         <table><tbody><tr><td bgcolor="#215CA0" style="padding:20px;border-radius:5px;color:fff;"><a href="#" style="color:#fff;text-decoration: none;">Submit Health Information</a></td></tr></tbody></table>
                                 </div>
@@ -40,6 +46,8 @@
                                 <div style="padding:20px;line-height:150%;">
                                         Questions? Please reach out to <a href="mailto:davos@salesforce.com">davos@salesforce.com</a>.
                                         <br /><br />
+We look forward to welcoming you safely in Davos!
+<br /><br />
                                         Thanks,
                                         <br />
                                         Salesforce Davos Team
