@@ -5,6 +5,28 @@
     <name>Email 3: Safety Cloud Test Result Upload Complete</name>
     <style>none</style>
     <subject>Your COVID-19 pre-travel test result has been uploaded for Salesforce at Davos</subject>
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
+
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+
+This is confirmation that your pre-travel test has been uploaded. Every step you take in our safety protocol goes a long way in keeping everyone safe — thank you!
+
+Once the test result verification process is complete, you’ll receive an email with a status update.
+
+Check your status:
+https://safetycloudfy23.secure.force.com/wefdavos
+
+Health Verification ID: {!vaxhv__Health_Verification__c. Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
+
+Questions? Please reach out to davos@salesforce.com.
+
+We look forward to welcoming you safely in Davos!
+
+Thanks,
+Salesforce Davos Team
+
+Please note that any handling of your personal data will be done in accordance with the Salesforce Privacy Statement.</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

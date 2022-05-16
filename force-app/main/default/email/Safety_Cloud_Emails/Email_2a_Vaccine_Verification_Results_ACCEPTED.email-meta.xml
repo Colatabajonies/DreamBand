@@ -5,6 +5,21 @@
     <name>Email 2a: Vaccine Verification Results (ACCEPTED)</name>
     <style>none</style>
     <subject>Your COVID-19 vaccination record has been verified for Salesforce at Davos</subject>
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
+
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+
+Great news — your vaccination status has been verified. Every step you take in our safety protocol goes a long way in keeping everyone safe — thank you!
+
+Questions? Please reach out to davos@salesforce.com.
+
+We look forward to welcoming you safely in Davos!
+
+Thanks,
+Salesforce Davos Team
+
+Please note that any handling of your personal data will be done in accordance with the Salesforce Privacy Statement.</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

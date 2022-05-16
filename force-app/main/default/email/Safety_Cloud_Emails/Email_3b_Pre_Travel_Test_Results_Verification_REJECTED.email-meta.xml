@@ -5,6 +5,30 @@
     <name>Email 3b: Pre-Travel Test Results Verification (REJECTED)</name>
     <style>none</style>
     <subject>[Action Required] Your pre-travel COVID-19 test result has been rejected</subject>
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
+
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+
+Upon review, your pre-travel COVID-19 test was not accepted. Your pre-travel test result was rejected because: {!vaxhv__Health_Verification__c.vaxhv__RejectedReason__c}
+
+If you think this decision was made in error, please respond to this email (davos@salesforce.com) with your concern. You can also come visit us at the Salesforce Welcome Center with your negative test.
+
+Salesforce welcome center is located at: 81 Promenade, Davos Platz
+* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET
+* Wednesday from 6:30 a.m. - 11:59 p.m. CET
+
+Check your status here
+https://safetycloudfy23.secure.force.com/wefdavos
+
+Health Verification ID: {!vaxhv__Health_Verification__c. Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
+
+Questions? Please reach out to davos@salesforce.com.
+
+Thanks,
+Salesforce Davos Team
+
+Please note that any handling of your personal data will be done in accordance with the Salesforce Privacy Statement.</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

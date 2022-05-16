@@ -5,14 +5,24 @@
     <name>Email 4: Dreampass Email</name>
     <style>none</style>
     <subject>Salesforce Davos - Your Dreampass</subject>
-    <textOnly>Hi {!relatedTo.Name},
-Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
 
-It&apos;s time to upload your proof of COVID-19 vaccination including a Booster Shot to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe.
+VERIFIED
 
-Submit Health Information
+https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYR&amp;oid=00D8b00000294BD&amp;lastMod=1652224266000
 
-Questions? Please reach out to davos@salesforce.com.
+Consider this your digital pass.
+This pass will only remain valid if you complete an onsite PCR at the testing center within 24hrs from now.
+
+Action Required: If you haven’t already, please make sure to take an onsite PCR test within 24hrs of registration, otherwise your Dreampass will expire.
+
+Please be ready to show this QR code to enter any Salesforce event space.
+
+For further assistance, you can visit us at the Salesforce Welcome Center located at: 81 Promenade, Davos Platz
+* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET
+* Wednesday from 6:30 a.m. - 11:59 p.m. CET
+
 
 Thanks,
 Salesforce Davos Team

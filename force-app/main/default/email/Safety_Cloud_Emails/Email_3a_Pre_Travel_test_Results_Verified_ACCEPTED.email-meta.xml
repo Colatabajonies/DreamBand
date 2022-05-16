@@ -5,6 +5,29 @@
     <name>Email 3a: Pre-Travel test Results Verified (ACCEPTED)</name>
     <style>none</style>
     <subject>Your COVID-19 pre-travel test result has been verified for Salesforce at Davos</subject>
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
+
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+
+Great news — your pre-travel test result has been verified. Every step you take in our safety protocol goes a long way in keeping everyone safe — thank you!
+
+
+Next Steps:
+* When you arrive at Davos, present the QR Code above at the Salesforce Welcome Center to check in (You will need to check in before accessing any Salesforce spaces).
+
+* Welcome Center is located at: 81 Promenade, Davos Platz
+Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET
+Wednesday from 6:30 a.m. - 11:59 p.m. CET
+
+Questions? Please reach out to davos@salesforce.com.
+
+We look forward to welcoming you safely at Davos!
+
+Thanks,
+Salesforce Davos Team
+
+Please note that any handling of your personal data will be done in accordance with the Salesforce Privacy Statement.</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

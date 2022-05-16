@@ -5,14 +5,18 @@
     <name>Email 5: Dreampass REVOKED</name>
     <style>none</style>
     <subject>[ACTION REQUIRED]: Your Davos Dreampass has expired</subject>
-    <textOnly>Hi {!relatedTo.Name},
-Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
 
-It&apos;s time to upload your proof of COVID-19 vaccination including a Booster Shot to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe.
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
 
-Submit Health Information
+Because we have not received documentation of your onsite PCR test within 24hrs of check in, your Dreampass has expired.
 
-Questions? Please reach out to davos@salesforce.com.
+Action Required: Please stop by the Salesforce Welcome center to get an onsite COVID-19 PCR test. This will re-activate your Dreampass.
+The Salesforce Welcome Center is located at: 81 Promenade, Davos Platz
+* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET
+* Wednesday from 6:30 a.m. - 11:59 p.m. CET
+
 
 Thanks,
 Salesforce Davos Team

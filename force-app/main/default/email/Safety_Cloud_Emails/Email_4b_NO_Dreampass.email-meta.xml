@@ -5,14 +5,21 @@
     <name>Email 4b: NO Dreampass</name>
     <style>none</style>
     <subject>[Action Required]: Salesforce Check in at Davos</subject>
-    <textOnly>Hi {!relatedTo.Name},
-Safety is our #1 value. As we get together, safely in Davos to inspire, network, and energize everyone with our culture for a fast start to FY23. To ensure the health and safety of our in-person attendees, and the community of Davos, we have protocols in place before and during the event.
+    <textOnly>-Please do not forward-
+Hi {!Contact.Name},
 
-It&apos;s time to upload your proof of COVID-19 vaccination including a Booster Shot to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe.
+To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
 
-Submit Health Information
+Upon arrival at Davos, your health status documentation will need to be verified by Salesforce Safety Cloud at the Salesforce Welcome Center (81 Promenade, Davos Platz) in order to enter Salesforce event spaces. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe. Required documentation includes:
 
-Questions? Please reach out to davos@salesforce.com.
+* Proof of being Fully Vaccinated (including 3rd Dose / Booster After June 21, 2021)
+* Primary Test - Negative PCR test taken no longer than 72 hours before arrival in Davos, or a Negative professionally administered or observed antigen test taken no longer than 24 hours before arrival in Davos
+* Secondary Test - PCR taken at Welcome Center within 24hrs of arrival (Note: If you have tested positive for COVID-19 since April 11, your PCR may be replaced by a second antigen test)
+
+Questions? Stop by the Salesforce Welcome Center located at: 81 Promenade, Davos Platz
+* Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET
+* Wednesday from 6:30 a.m. - 11:59 p.m. CET
+
 
 Thanks,
 Salesforce Davos Team
