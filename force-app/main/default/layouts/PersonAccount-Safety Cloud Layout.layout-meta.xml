@@ -22,6 +22,10 @@
                 <field>Type</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>PersonEmail</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Dreampass_CompanyName__c</field>
             </layoutItems>
@@ -31,8 +35,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>PersonEmail</field>
+                <behavior>Edit</behavior>
+                <field>ExternalId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

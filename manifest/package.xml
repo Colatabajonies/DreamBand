@@ -14,6 +14,10 @@
         <members>Account.Dreampass_Checkin_Time__c</members>
         <members>Account.Dreampass_OnsitePCRTestDate__c</members>
 
+        <members>Contact.Dreampass_AttendeeType__c</members>
+        <members>Contact.Dreampass_CompanyName__c</members>
+        <members>Contact.Dreampass_ExternalId__c</members>
+
         <members>DreampassAccessLog__c.Account__c</members>
         <members>DreampassAccessLog__c.Location__c</members>
         <members>DreampassAccessLog__c.Status__c</members>

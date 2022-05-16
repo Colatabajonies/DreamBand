@@ -11,7 +11,7 @@ public class Dreampass_LabHelper
         result.numPositives = 0;
         
         List<LabData__c> objLabs = new List<LabData__c>([SELECT EMail__c, Last_name__c, Birth_date__c, Sampling_date__c, Sampling_time__c, Test_result__c, Test_Antigen_PCR__c  FROM LabData__c WHERE Test_Antigen_PCR__c =: 'PCR' AND isProcessed__c = false]);
-        List<Account> objAccounts = new List<Account>([SELECT ID, FirstName, LastName, PersonEmail, PersonBirthdate, Dreampass_OnsitePCRTestDate__c FROM Account]);
+        List<Account> objAccounts = new List<Account>([SELECT ID, FirstName, LastName, PersonEmail, PersonBirthdate, Dreampass_OnsitePCRTestDate__c, Dreampass_CompanyName__c FROM Account]);
         List<vaxhv__Health_Verification__c> objHVs = new List<vaxhv__Health_Verification__c>([SELECT Id, vaxhv__PersonAccount__c, vaxhv__HealthVerificationStatus__c, vaxhv__TestResult__c, safetycloud__TestDateTime__c  FROM vaxhv__Health_Verification__c WHERE safetycloud__OccurrenceId__c  =: 'onsitepcr']);
         
         //Loop through this list
@@ -24,6 +24,10 @@ public class Dreampass_LabHelper
                 //Now see if there is an associated Health Verification
                 vaxhv__Health_Verification__c objHV = findHMatch(objHVs, objA);
                 string HVstatus = '';
+                if (string.isblank(objLab.Test_result__c))
+                {
+                    objLab.Test_result__c = '';
+                }
                 switch on objLab.Test_result__c.toLowerCase() {
                     when 'negative' {		// when block 1
                         HVstatus = 'Verified';
@@ -58,6 +62,7 @@ public class Dreampass_LabHelper
                     objHV.vaxhv__Language__c = 'en_US';
                     objHV.vaxhv__LastName__c = objA.LastName;
                     objHV.vaxhv__PersonAccount__c = objA.Id;
+                    objHV.Company__c = objA.Dreampass_CompanyName__c;
                     objHVs.add(objHV);
                     result.numHVCreate+=1;
                 }

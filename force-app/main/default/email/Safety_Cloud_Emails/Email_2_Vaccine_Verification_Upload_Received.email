@@ -38,9 +38,9 @@ To ensure the health and safety of our in-person attendees, and the community at
 <br /><br />
 Once the vaccine verification process is complete, you’ll receive an email with a status update. 
 <br /><br />
-Check your status <a href="#">here</a>
+Check your status <a href="https://safetycloudfy23.secure.force.com/wefdavos">here</a>
 <br />
-Health Verification ID: {!vaxhv__Health_Verification__c.Id}
+Health Verification ID: {!vaxhv__Health_Verification__c. Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
 <br />
 
 
