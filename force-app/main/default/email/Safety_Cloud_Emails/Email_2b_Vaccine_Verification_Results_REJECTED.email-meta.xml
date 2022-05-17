@@ -21,7 +21,7 @@ Salesforce welcome center is located at: 81 Promenade, Davos Platz
 Check your status:
 https://safetycloudfy23.secure.force.com/wefdavos
 
-Health Verification ID: {!vaxhv__Health_Verification__c. Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
+Health Verification ID: {!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
 
 Questions? Please reach out to davos@salesforce.com.
 

@@ -178,6 +178,13 @@
                 <elementReference>$Record.vaxhv__PhoneNumber__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Person_Account.PersonBirthdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.BirthDate__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Upodate_HV</targetReference>
         </connector>

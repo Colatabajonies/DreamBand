@@ -50,6 +50,7 @@
     <tabs>Dreampass_Scanner_Desktop</tabs>
     <tabs>DreampassAccessLog__c</tabs>
     <tabs>vaxhv__Health_Verification__c</tabs>
+    <tabs>LabData__c</tabs>
     <tabs>standard-Location</tabs>
     <tabs>standard-Campaign</tabs>
     <tabs>standard-Case</tabs>
@@ -62,6 +63,9 @@
         </mappings>
         <mappings>
             <tab>Dreampass_Scanner_Desktop</tab>
+        </mappings>
+        <mappings>
+            <tab>LabData__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Account</tab>

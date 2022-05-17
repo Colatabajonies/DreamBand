@@ -876,9 +876,21 @@
             <targetReference>Update_Record_for_QR_0</targetReference>
         </connector>
         <inputAssignments>
+            <field>BirthDate__c</field>
+            <value>
+                <elementReference>objAttendee.PersonBirthdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Company__c</field>
             <value>
                 <elementReference>objAttendee.Dreampass_CompanyName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Dreampass_AttendeeType__c</field>
+            <value>
+                <elementReference>objAttendee.Type</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -965,9 +977,21 @@
             <targetReference>Update_Record_for_QR</targetReference>
         </connector>
         <inputAssignments>
+            <field>BirthDate__c</field>
+            <value>
+                <elementReference>objAttendee.PersonBirthdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Company__c</field>
             <value>
                 <stringValue>VIP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Dreampass_AttendeeType__c</field>
+            <value>
+                <elementReference>objAttendee.Type</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1054,9 +1078,21 @@
             <targetReference>Update_Record_for_QR_0_0</targetReference>
         </connector>
         <inputAssignments>
+            <field>BirthDate__c</field>
+            <value>
+                <elementReference>objAttendee.PersonBirthdate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Company__c</field>
             <value>
                 <elementReference>objAttendee.Dreampass_CompanyName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Dreampass_AttendeeType__c</field>
+            <value>
+                <elementReference>objAttendee.Type</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

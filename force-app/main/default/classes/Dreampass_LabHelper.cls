@@ -92,7 +92,8 @@ public class Dreampass_LabHelper
         for (Account objA : objAs)
         {
             //Match on email + birthdate
-            if (lab.EMail__c.toLowerCase() == objA.PersonEmail.toLowerCase() && lab.Birth_date__c == objA.PersonBirthdate)
+            if (String.isNotBlank(lab.Email__c) && String.isNotBlank(objA.PersonEmail) && lab.Birth_date__c != null && objA.PersonBirthdate != null 
+                && lab.EMail__c.toLowerCase() == objA.PersonEmail.toLowerCase() && lab.Birth_date__c == objA.PersonBirthdate)
             {
                 return objA;
             }
