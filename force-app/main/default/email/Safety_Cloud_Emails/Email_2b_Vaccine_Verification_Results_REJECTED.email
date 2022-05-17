@@ -44,7 +44,7 @@ Salesforce welcome center is located at: <b>81 Promenade, Davos Platz</b><br />
 * Wednesday from 6:30 a.m. - 11:59 p.m. CET</div>
 
 <br />
-Check your status <a href="https://safetycloudfy23.secure.force.com/wefdavos">here</a>
+Check your status <a href="https://safetycloudfy23.secure.force.com/wefdavos?confirmationId={!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}">here</a>
 <br />
 Health Verification ID: {!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
 <br />
