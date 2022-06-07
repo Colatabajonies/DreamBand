@@ -10,7 +10,7 @@ Hi {!Contact.Name},
 
 VERIFIED
 
-https://safetycloudfy23--c.documentforce.com/servlet/servlet.ImageServer?id=0158b000009ecYR&amp;oid=00D8b00000294BD&amp;lastMod=1652224266000
+{!vaxhv__Health_Verification__c.safetycloud__QRCodeURL__c}
 
 Consider this your digital pass.
 This pass will only remain valid if you complete an onsite PCR at the testing center within 24hrs from now.
@@ -18,7 +18,6 @@ This pass will only remain valid if you complete an onsite PCR at the testing ce
 Action Required: If you haven’t already, please make sure to take an onsite PCR test within 24hrs of registration, otherwise your Dreampass will expire.
 
 Please be ready to show this QR code to enter any Salesforce event space.
-
 For further assistance, you can visit us at the Salesforce Welcome Center located at: 81 Promenade, Davos Platz
 * Monday - Tuesday from 6:30 a.m. - 8:30 p.m. CET
 * Wednesday from 6:30 a.m. - 11:59 p.m. CET

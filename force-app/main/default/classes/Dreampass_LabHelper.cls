@@ -10,17 +10,28 @@ public class Dreampass_LabHelper
         result.numHVUpdate = 0;
         result.numPositives = 0;
         
-        List<LabData__c> objLabs = new List<LabData__c>([SELECT EMail__c, Last_name__c, Birth_date__c, Sampling_date__c, Sampling_time__c, Test_result__c, Test_Antigen_PCR__c  FROM LabData__c WHERE Test_Antigen_PCR__c =: 'PCR' AND isProcessed__c = false]);
-        List<Account> objAccounts = new List<Account>([SELECT ID, FirstName, LastName, PersonEmail, PersonBirthdate, Dreampass_OnsitePCRTestDate__c, Dreampass_CompanyName__c FROM Account]);
-        List<vaxhv__Health_Verification__c> objHVs = new List<vaxhv__Health_Verification__c>([SELECT Id, vaxhv__PersonAccount__c, vaxhv__HealthVerificationStatus__c, vaxhv__TestResult__c, safetycloud__TestDateTime__c  FROM vaxhv__Health_Verification__c WHERE safetycloud__OccurrenceId__c  =: 'onsitepcr']);
+        List<LabData__c> objLabs = new List<LabData__c>([SELECT EMail__c, Last_name__c, Birth_date__c, Sampling_date__c, Sampling_time__c, Test_result__c, Test_Antigen_PCR__c, Match__c  FROM LabData__c WHERE Test_Antigen_PCR__c =: 'PCR' AND isProcessed__c = false]);
+        List<Account> objAccounts = new List<Account>([SELECT ID, FirstName, LastName, PersonEmail, PersonBirthdate, Dreampass_OnsitePCRTestDate__c, Dreampass_CompanyName__c, Phone FROM Account]);
+        List<vaxhv__Health_Verification__c> objHVs = new List<vaxhv__Health_Verification__c>([SELECT Id, vaxhv__PersonAccount__c, vaxhv__HealthVerificationStatus__c, vaxhv__TestResult__c, safetycloud__TestDateTime__c, vaxhv__PhoneNumber__c, BirthDate__c, Company__c  FROM vaxhv__Health_Verification__c WHERE safetycloud__OccurrenceId__c  =: 'onsitepcr']);
+        
+        List<Account> updateAccounts = new List<Account>();
+        List<vaxhv__Health_Verification__c> updateHVs = new List<vaxhv__Health_Verification__c>();
         
         //Loop through this list
+        integer counter = 0;
         for (LabData__c objLab : objLabs)
         {
+            if (counter >= 24)
+            {
+                break;
+            }
+            counter+=1;
+            
             //First try to find an account match
             Account objA = findAMatch(objAccounts, objLab);
             if (objA != null)
             {
+                objLab.Match__c = true;
                 //Now see if there is an associated Health Verification
                 vaxhv__Health_Verification__c objHV = findHMatch(objHVs, objA);
                 string HVstatus = '';
@@ -62,8 +73,10 @@ public class Dreampass_LabHelper
                     objHV.vaxhv__Language__c = 'en_US';
                     objHV.vaxhv__LastName__c = objA.LastName;
                     objHV.vaxhv__PersonAccount__c = objA.Id;
+                    objHV.BirthDate__c = objA.PersonBirthdate;
+                    objHV.vaxhv__PhoneNumber__c = objA.Phone;
                     objHV.Company__c = objA.Dreampass_CompanyName__c;
-                    objHVs.add(objHV);
+                    updateHVs.add(objHV);
                     result.numHVCreate+=1;
                 }
                 else if (objHV.vaxhv__HealthVerificationStatus__c == 'New')
@@ -71,16 +84,18 @@ public class Dreampass_LabHelper
                     objHV.vaxhv__HealthVerificationStatus__c = HVstatus;
                     objHV.safetycloud__TestDateTime__c = Datetime.newInstance(objLab.Sampling_date__c, objLab.Sampling_time__c);
                     result.numHVUpdate+=1;
+                    updateHVs.add(objHV);
                 }
                 objA.Dreampass_OnsitePCRTestDate__c = objHV.safetycloud__TestDateTime__c;
+                updateAccounts.add(objA);
             }
             //Update lab to be processed
             objLab.isProcessed__c = true;
             result.numLabs+=1;
         }
         
-        UPSERT objHVS;
-        UPDATE objAccounts;
+        UPSERT updateHVs;
+        UPDATE updateAccounts;
         UPDATE objLabs;
         
         results.add(result);
@@ -92,8 +107,8 @@ public class Dreampass_LabHelper
         for (Account objA : objAs)
         {
             //Match on email + birthdate
-            if (String.isNotBlank(lab.Email__c) && String.isNotBlank(objA.PersonEmail) && lab.Birth_date__c != null && objA.PersonBirthdate != null 
-                && lab.EMail__c.toLowerCase() == objA.PersonEmail.toLowerCase() && lab.Birth_date__c == objA.PersonBirthdate)
+            if (String.isNotBlank(lab.Email__c) && String.isNotBlank(objA.PersonEmail) //&& lab.Birth_date__c != null && objA.PersonBirthdate != null 
+                && lab.EMail__c.toLowerCase() == objA.PersonEmail.toLowerCase()) //&& lab.Birth_date__c == objA.PersonBirthdate)
             {
                 return objA;
             }

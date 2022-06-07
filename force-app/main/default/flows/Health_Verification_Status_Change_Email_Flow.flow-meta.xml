@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_the_Email</name>
         <label>Send the Email</label>
-        <locationX>842</locationX>
-        <locationY>1271</locationY>
+        <locationX>536</locationX>
+        <locationY>1319</locationY>
         <actionName>SendBetterEmail</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -38,8 +38,8 @@
     <assignments>
         <name>Assign_Template</name>
         <label>Assign Template</label>
-        <locationX>50</locationX>
-        <locationY>1055</locationY>
+        <locationX>37</locationX>
+        <locationY>1156</locationY>
         <assignmentItems>
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
@@ -54,8 +54,8 @@
     <assignments>
         <name>Assign_Template_0</name>
         <label>Assign Template</label>
-        <locationX>314</locationX>
-        <locationY>1055</locationY>
+        <locationX>228</locationX>
+        <locationY>1402</locationY>
         <assignmentItems>
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
@@ -70,8 +70,8 @@
     <assignments>
         <name>Assign_Template_0_0</name>
         <label>Assign Template</label>
-        <locationX>578</locationX>
-        <locationY>1055</locationY>
+        <locationX>360</locationX>
+        <locationY>1103</locationY>
         <assignmentItems>
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
@@ -86,8 +86,8 @@
     <assignments>
         <name>Assign_Template_0_0_0</name>
         <label>Assign Template</label>
-        <locationX>842</locationX>
-        <locationY>1055</locationY>
+        <locationX>624</locationX>
+        <locationY>1103</locationY>
         <assignmentItems>
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
@@ -102,8 +102,8 @@
     <assignments>
         <name>Assign_Template_0_0_0_0</name>
         <label>Assign Template</label>
-        <locationX>1106</locationX>
-        <locationY>1055</locationY>
+        <locationX>836</locationX>
+        <locationY>1152</locationY>
         <assignmentItems>
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
@@ -118,8 +118,8 @@
     <assignments>
         <name>Assign_Template_0_0_0_0_0</name>
         <label>Assign Template</label>
-        <locationX>1370</locationX>
-        <locationY>1055</locationY>
+        <locationX>1279</locationX>
+        <locationY>1143</locationY>
         <assignmentItems>
             <assignToReference>emailTemplateName</assignToReference>
             <operator>Assign</operator>
@@ -134,8 +134,8 @@
     <assignments>
         <name>Assign_Variables</name>
         <label>Assign Variables</label>
-        <locationX>842</locationX>
-        <locationY>455</locationY>
+        <locationX>536</locationX>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>recordId</assignToReference>
             <operator>Assign</operator>
@@ -192,9 +192,28 @@
     <decisions>
         <name>Determine_Status_Change</name>
         <label>Determine Status Change</label>
-        <locationX>842</locationX>
-        <locationY>935</locationY>
+        <locationX>536</locationX>
+        <locationY>983</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>CheckIn_Flow</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.vaxhv__ExternalId__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>covidtest-</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.vaxhv__ExternalId__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>vax-</stringValue>
+                </rightValue>
+            </conditions>
+            <label>CheckIn Flow</label>
+        </rules>
         <rules>
             <name>VaxNew</name>
             <conditionLogic>and</conditionLogic>
@@ -372,7 +391,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -385,8 +404,8 @@
     <recordLookups>
         <name>Get_Contact</name>
         <label>Get Contact</label>
-        <locationX>842</locationX>
-        <locationY>815</locationY>
+        <locationX>536</locationX>
+        <locationY>863</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Determine_Status_Change</targetReference>
@@ -406,8 +425,8 @@
     <recordLookups>
         <name>Get_Person_Account</name>
         <label>Get Person Account</label>
-        <locationX>842</locationX>
-        <locationY>335</locationY>
+        <locationX>536</locationX>
+        <locationY>383</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Variables</targetReference>
@@ -429,8 +448,8 @@
     <recordUpdates>
         <name>Update_Person_Account</name>
         <label>Update Person Account</label>
-        <locationX>842</locationX>
-        <locationY>695</locationY>
+        <locationX>536</locationX>
+        <locationY>743</locationY>
         <connector>
             <targetReference>Get_Contact</targetReference>
         </connector>
@@ -439,8 +458,8 @@
     <recordUpdates>
         <name>Upodate_HV</name>
         <label>Upodate HV</label>
-        <locationX>842</locationX>
-        <locationY>575</locationY>
+        <locationX>536</locationX>
+        <locationY>623</locationY>
         <connector>
             <targetReference>Update_Person_Account</targetReference>
         </connector>
@@ -453,8 +472,8 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>716</locationX>
-        <locationY>0</locationY>
+        <locationX>410</locationX>
+        <locationY>48</locationY>
         <connector>
             <targetReference>Get_Person_Account</targetReference>
         </connector>
@@ -470,7 +489,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>emailTemplateId</name>
         <dataType>String</dataType>

@@ -8,10 +8,7 @@ public class Dreampass_AccessChallenge_ctrl
         {
             return null;
         }
-        else if (String.isNotBlank(locationId))
-        {
-            Dreampass_Helper.logAccessChallenge(objDp.objAccount, locationId, objDp.isValid);
-        }
+        Dreampass_Helper.logAccessChallenge(objDp.objAccount, locationId, objDp.isValid);
         return objDp;
     }
     
@@ -24,10 +21,7 @@ public class Dreampass_AccessChallenge_ctrl
         {
             return null;
         }
-        else if (String.isNotBlank(locationId))
-        {
-            Dreampass_Helper.logAccessChallenge(objDp.objAccount, locationId, objDp.isValid);
-        }
+        Dreampass_Helper.logAccessChallenge(objDp.objAccount, locationId, objDp.isValid);
         return objDp;
     }
 }

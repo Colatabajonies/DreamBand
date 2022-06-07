@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SafetyCloudPersonAccountPage</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#0F2C60</headerColor>
         <logo>Screen_Shot_20220505_at_112421_AM2</logo>
@@ -46,20 +55,54 @@
         <type>Flexipage</type>
         <profile>Standard</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>Tab</actionName>
+        <content>Home_Page_Default</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>Tab</actionName>
+        <content>Home_Page_Default</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Read Only</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SafetyCloudPersonAccountPage</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>PersonAccount.PersonAccount</recordType>
+        <type>Flexipage</type>
+        <profile>Lab</profile>
+    </profileActionOverrides>
+    <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
     <tabs>Dreampass_Scanner_Desktop</tabs>
     <tabs>DreampassAccessLog__c</tabs>
     <tabs>vaxhv__Health_Verification__c</tabs>
     <tabs>LabData__c</tabs>
+    <tabs>Davos_Registration</tabs>
     <tabs>standard-Location</tabs>
     <tabs>standard-Campaign</tabs>
     <tabs>standard-Case</tabs>
     <tabs>standard-Dashboard</tabs>
+    <tabs>DreampassExpiration__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Safety_Cloud_UtilityBar1</utilityBar>
     <workspaceConfig>
         <mappings>
+            <tab>Davos_Registration</tab>
+        </mappings>
+        <mappings>
             <tab>DreampassAccessLog__c</tab>
+        </mappings>
+        <mappings>
+            <tab>DreampassExpiration__c</tab>
         </mappings>
         <mappings>
             <tab>Dreampass_Scanner_Desktop</tab>
@@ -81,6 +124,9 @@
         </mappings>
         <mappings>
             <tab>standard-Location</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
         </mappings>
         <mappings>
             <tab>vaxhv__Health_Verification__c</tab>

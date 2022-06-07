@@ -2,15 +2,13 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Location__c</columns>
     <columns>Account__c</columns>
-    <columns>Status__c</columns>
-    <columns>CREATED_DATE</columns>
+    <columns>AccountCompany__c</columns>
+    <columns>AccountEmail__c</columns>
+    <columns>Dreampass_Active__c</columns>
+    <columns>Dreampass_Expiration__c</columns>
+    <columns>LastProcessed__c</columns>
+    <columns>Type__c</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Status__c</field>
-        <operation>equals</operation>
-        <value>Denied</value>
-    </filters>
     <label>All</label>
 </ListView>

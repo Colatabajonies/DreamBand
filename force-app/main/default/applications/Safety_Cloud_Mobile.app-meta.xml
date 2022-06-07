@@ -46,11 +46,15 @@
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
-    <tabs>standard-Account</tabs>
     <tabs>Dreampass_Scanner_Mobile</tabs>
+    <tabs>standard-Account</tabs>
     <tabs>Davos_Registration</tabs>
     <tabs>DreampassAccessLog__c</tabs>
     <tabs>vaxhv__Health_Verification__c</tabs>
+    <tabs>Testing_Privacy_Policy</tabs>
+    <tabs>DreampassExpiration__c</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>standard-report</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Safety_Cloud_Mobile_UtilityBar</utilityBar>
 </CustomApplication>

@@ -32,7 +32,7 @@
                                     Hi {!Contact.Name},<br /><br />
                                         
 
-To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+To help ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
 <br /><br />
 Upon review, <b>your COVID-19 vaccination record was not accepted. </b>Your vaccination record was rejected because: {!vaxhv__Health_Verification__c.vaxhv__RejectedReason__c}
 <br /><br />
@@ -44,10 +44,7 @@ Salesforce welcome center is located at: <b>81 Promenade, Davos Platz</b><br />
 * Wednesday from 6:30 a.m. - 11:59 p.m. CET</div>
 
 <br />
-Check your status <a href="https://safetycloudfy23.secure.force.com/wefdavos?confirmationId={!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}">here</a>
-<br />
-Health Verification ID: {!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
-<br />
+
 
 
 

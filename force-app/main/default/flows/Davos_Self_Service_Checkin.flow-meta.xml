@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionCalls>
         <name>Get_Attendee_From_QR</name>
         <label>Get Attendee From QR</label>
-        <locationX>1455</locationX>
-        <locationY>523</locationY>
+        <locationX>1182</locationX>
+        <locationY>505</locationY>
         <actionName>Dreampass_ScanQRAction</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Is_Attendee_Found</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>requests</name>
@@ -26,7 +29,7 @@
         <name>Get_Covid_Test_Status</name>
         <label>Get Covid Test Status</label>
         <locationX>1239</locationX>
-        <locationY>1578</locationY>
+        <locationY>1576</locationY>
         <actionName>Dreampass_CovidTestVerified</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -47,34 +50,12 @@
     <actionCalls>
         <name>Get_Covid_Test_Status_0</name>
         <label>Get Covid Test Status</label>
-        <locationX>1387</locationX>
-        <locationY>2246</locationY>
+        <locationX>1326</locationX>
+        <locationY>2518</locationY>
         <actionName>Dreampass_CovidTestVerified</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Everything_Set_0</targetReference>
-        </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>accoundIds</name>
-            <value>
-                <elementReference>objAttendee.Id</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>isCovidTestVerified</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Get_Covid_Test_Status_0_0</name>
-        <label>Get Covid Test Status</label>
-        <locationX>1974</locationX>
-        <locationY>1708</locationY>
-        <actionName>Dreampass_CovidTestVerified</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Get_Vax_Status_0_0</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -135,34 +116,12 @@
     <actionCalls>
         <name>Get_Vax_Status_0</name>
         <label>Get Vax Status</label>
-        <locationX>1388</locationX>
-        <locationY>1957</locationY>
+        <locationX>1515</locationX>
+        <locationY>2073</locationY>
         <actionName>Dreampass_VaxVerifyAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>CovidTest_HV_Needs_to_be_Created</targetReference>
-        </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>accoundIds</name>
-            <value>
-                <elementReference>objAttendee.Id</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>isVaxVerified</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Get_Vax_Status_0_0</name>
-        <label>Get Vax Status</label>
-        <locationX>1793</locationX>
-        <locationY>1722</locationY>
-        <actionName>Dreampass_VaxVerifyAction</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Vax_HV_Needs_to_be_Created</targetReference>
+            <targetReference>Get_Unverified_Covid_Test</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -178,58 +137,163 @@
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <assignments>
-        <name>Assign_Error_Text_No_Attendee</name>
-        <label>Assign Error Text No Attendee</label>
-        <locationX>1521</locationX>
-        <locationY>884</locationY>
+        <name>Assign_Vals</name>
+        <label>Assign Vals</label>
+        <locationX>2574</locationX>
+        <locationY>832</locationY>
         <assignmentItems>
-            <assignToReference>strErrorText</assignToReference>
+            <assignToReference>objAttendee.FirstName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>You did not select an attendee. Please go back and either select an attendee or create a new one.</stringValue>
+                <elementReference>Update_FirstName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.LastName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Update_LastName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.PersonBirthdate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Update_DOB</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.PersonMailingStreet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_street</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.PersonMailingCity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_City</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.PersonMailingState</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_state</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.PersonMailingPostalCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_PostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.PersonMailingCountry</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_Country</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CreatedAccountID</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>objAttendee.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.Phone</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_phone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.Gender__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_gender</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>objAttendee.Dreampass_CompanyName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>update_CompanyName</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Update_Account</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Error_That_somethings_not_met</name>
-        <label>Assign Error That somethings not met</label>
-        <locationX>2107</locationX>
-        <locationY>2505</locationY>
+        <name>Set_Covid_Test_Vars</name>
+        <label>Set Covid Test Vars</label>
+        <locationX>1979</locationX>
+        <locationY>2378</locationY>
         <assignmentItems>
-            <assignToReference>strErrorText</assignToReference>
+            <assignToReference>CovidTestText</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>The attendee cannot check in unless all protocols are met. Please go back and validate all protocol documents are received.</stringValue>
+                <stringValue>Pending COVID Test</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>covidtestcolor</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>#F19F51</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>covidicon</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>warning</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_Screen_0</targetReference>
+            <targetReference>CovidTest_HV_Needs_to_be_Created</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Attendee_Not_Found</name>
-        <label>Attendee Not Found</label>
-        <locationX>1672</locationX>
-        <locationY>1077</locationY>
+        <name>Set_Vax_Pills</name>
+        <label>Set Vax Pills</label>
+        <locationX>1757</locationX>
+        <locationY>1958</locationY>
         <assignmentItems>
-            <assignToReference>strErrorText</assignToReference>
+            <assignToReference>VaccineText</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Error retrieving Account data. Please go back and try again.</stringValue>
+                <stringValue>Outstanding Vaccine Verification</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vaxcolor</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>#D17B6D</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vaxicon</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>redcross</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_Screen</targetReference>
+            <targetReference>Get_Unverified_Covid_Test</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_VIP_Text</name>
         <label>Set VIP Text</label>
         <locationX>765</locationX>
-        <locationY>1356</locationY>
+        <locationY>1359</locationY>
         <assignmentItems>
             <assignToReference>VaccineText</assignToReference>
             <operator>Assign</operator>
@@ -282,18 +346,18 @@
     <decisions>
         <name>Attendee_Search_Outcome</name>
         <label>Attendee Search Outcome</label>
-        <locationX>1955</locationX>
-        <locationY>986</locationY>
+        <locationX>2430</locationX>
+        <locationY>611</locationY>
         <defaultConnector>
-            <targetReference>Assign_Error_Text_No_Attendee</targetReference>
+            <targetReference>Update_Attendee</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>ScreenNewAttendeeYes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CreateNewAttendee</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>objAttendee</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -302,21 +366,6 @@
                 <targetReference>Create_Attendee</targetReference>
             </connector>
             <label>New Attendee</label>
-        </rules>
-        <rules>
-            <name>Attendee_Selected</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>SelectedSearchAccountId</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Attendee_From_Search</targetReference>
-            </connector>
-            <label>Attendee Selected</label>
         </rules>
     </decisions>
     <decisions>
@@ -360,10 +409,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Covid_Test_Missing</name>
+        <label>Covid Test Missing?</label>
+        <locationX>1975</locationX>
+        <locationY>2211</locationY>
+        <defaultConnector>
+            <targetReference>Everything_Set_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>COVIDTestHVNeedsCreation_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isCovidTestVerified</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Covid_Test_Vars</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>CovidTest_HV_Needs_to_be_Created</name>
         <label>CovidTest HV Needs to be Created?</label>
-        <locationX>1570</locationX>
-        <locationY>2023</locationY>
+        <locationX>2108</locationX>
+        <locationY>2557</locationY>
         <defaultConnector>
             <targetReference>Everything_Set_0</targetReference>
         </defaultConnector>
@@ -379,21 +453,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Attendee_has_proof_of_a_recent_72hr_PCR_24hr_Rapid_negative_COVID_19_test_result</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Attendee_ID_matches_the_information_provided_above</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Get_Unverified_Covid_Test</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_CovidTest_HV</targetReference>
+                <targetReference>Get_Covid_Test_Status_0</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -424,142 +491,37 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Does_duplicate_account_exist</name>
-        <label>Does duplicate account exist?</label>
-        <locationX>2660</locationX>
-        <locationY>1019</locationY>
+        <name>Do_we_need_to_verify_Tests</name>
+        <label>Do we need to verify Tests?</label>
+        <locationX>869</locationX>
+        <locationY>2877</locationY>
         <defaultConnector>
-            <targetReference>Create_Attendee_Record</targetReference>
+            <targetReference>Error_Screen_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yesduplicate</name>
+            <name>Verify_Tests</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Duplicate_Account</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Resolve_Duplicate</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Does_duplicate_account_exist_0</name>
-        <label>Does duplicate account exist?</label>
-        <locationX>523</locationX>
-        <locationY>875</locationY>
-        <defaultConnector>
-            <targetReference>Create_VIP</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Yesduplicate_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Duplicate_VIP_Account</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Resolve_Duplicate_0</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>DupSelection</name>
-        <label>Duplicate Choice?</label>
-        <locationX>3082</locationX>
-        <locationY>729</locationY>
-        <defaultConnector>
-            <targetReference>Attendee_Search</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Use_ExistingDuplicate</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>dupUseExisting</leftValueReference>
+                <leftValueReference>verifyTests</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Existing_Attendee</targetReference>
+                <targetReference>Set_Test_Results</targetReference>
             </connector>
-            <label>Use Existing</label>
-        </rules>
-        <rules>
-            <name>Create_New_AttendeeDUp</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>dupCreateDuplicate</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_Attendee_Record</targetReference>
-            </connector>
-            <label>Create New Attendee</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>DupSelection_0</name>
-        <label>Duplicate Choice?</label>
-        <locationX>50</locationX>
-        <locationY>664</locationY>
-        <defaultConnector>
-            <targetReference>Create_VIP_Attendee</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Use_ExistingDuplicate_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>dupUseExisting</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Existing_VIP_Attendee</targetReference>
-            </connector>
-            <label>Use Existing</label>
-        </rules>
-        <rules>
-            <name>Create_New_AttendeeDUp_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>dupCreateDuplicate</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_VIP</targetReference>
-            </connector>
-            <label>Create New Attendee</label>
+            <label>Verify Test</label>
         </rules>
     </decisions>
     <decisions>
         <name>Everything_Set</name>
         <label>Everything Set?</label>
-        <locationX>958</locationX>
-        <locationY>1710</locationY>
+        <locationX>1365</locationX>
+        <locationY>1737</locationY>
         <defaultConnector>
-            <targetReference>VerifyProtocols</targetReference>
+            <targetReference>Vax_HV_Needs_to_be_Created</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -595,15 +557,15 @@
     <decisions>
         <name>Everything_Set_0</name>
         <label>Everything Set 2?</label>
-        <locationX>1481</locationX>
-        <locationY>2542</locationY>
+        <locationX>1160</locationX>
+        <locationY>2715</locationY>
         <defaultConnector>
-            <targetReference>Assign_Error_That_somethings_not_met</targetReference>
+            <targetReference>Review_Information_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>All_Requirements_Met_0</name>
-            <conditionLogic>1 AND (2 OR 3) AND 4</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>isCovidTestVerified</leftValueReference>
                 <operator>EqualTo</operator>
@@ -623,13 +585,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Employee</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Attendee_ID_matches_the_information_provided_above</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -658,43 +613,50 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Attendee_Type</targetReference>
+                <targetReference>Update_Attendee</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Attendee_Found_From_Get_Record</name>
-        <label>Is Attendee Found From Get Record?</label>
-        <locationX>1730</locationX>
-        <locationY>1235</locationY>
+        <name>Is_Attested</name>
+        <label>Is Attested</label>
+        <locationX>1552</locationX>
+        <locationY>1832</locationY>
         <defaultConnector>
-            <targetReference>Attendee_Not_Found</targetReference>
+            <targetReference>Skip_Vax</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Attendee_Found</name>
+            <name>Attested</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>objAttendee</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>IdMatched</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>VaxMatched</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Attendee_Type</targetReference>
+                <targetReference>Create_Vax_HV</targetReference>
             </connector>
-            <label>Attendee Found</label>
+            <label>Attested</label>
         </rules>
     </decisions>
     <decisions>
         <name>Vax_HV_Needs_to_be_Created</name>
         <label>Vax HV Needs to be Created?</label>
-        <locationX>1571</locationX>
-        <locationY>1799</locationY>
+        <locationX>1987</locationX>
+        <locationY>1739</locationY>
         <defaultConnector>
-            <targetReference>CovidTest_HV_Needs_to_be_Created</targetReference>
+            <targetReference>Get_Unverified_Covid_Test</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -708,48 +670,16 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Attendee_has_a_Vaccine_Card_that_confirms_they_are_fully_vaccinated_Fully_vaccin</leftValueReference>
+                <leftValueReference>objAttendee.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Attendee_ID_matches_the_information_provided_above</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Guest</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Vax_HV</targetReference>
+                <targetReference>Verify_Vax</targetReference>
             </connector>
             <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>VIPAccessDecision</name>
-        <label>Is VIP Access</label>
-        <locationX>1181</locationX>
-        <locationY>446</locationY>
-        <defaultConnector>
-            <targetReference>Get_Attendee_From_QR</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isVIP</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>VIPAccess</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_VIP_Attendee</targetReference>
-            </connector>
-            <label>VIP</label>
         </rules>
     </decisions>
     <decisions>
@@ -776,24 +706,17 @@
             </connector>
             <label>Nothing</label>
         </rules>
-        <rules>
-            <name>PCRAdministeredYes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>OPTIONAL_Attendee_has_proof_of_pending_onsite_PCR_Test_NOT_REQUIRED_FOR_CHECKIN</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_In_Attendee_0</targetReference>
-            </connector>
-            <label>Checkin and PCR</label>
-        </rules>
     </decisions>
-    <interviewLabel>Davos Registration Flow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Davos Registration Flow</label>
+    <dynamicChoiceSets>
+        <name>genderset</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Gender__c</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+    <interviewLabel>Davos - Self Service Checkin {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Davos - Self Service Checkin</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -816,12 +739,15 @@
     <recordCreates>
         <name>Create_Attendee_Record</name>
         <label>Create Attendee</label>
-        <locationX>2499</locationX>
-        <locationY>1200</locationY>
+        <locationX>2794</locationX>
+        <locationY>769</locationY>
         <assignRecordIdToReference>CreatedAccountID</assignRecordIdToReference>
         <connector>
             <targetReference>Get_Attendee_After_Create</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Dreampass_CompanyName__c</field>
             <value>
@@ -831,25 +757,67 @@
         <inputAssignments>
             <field>FirstName</field>
             <value>
-                <elementReference>New_FirstName</elementReference>
+                <elementReference>new_FirstName_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Gender__c</field>
+            <value>
+                <elementReference>new_gender_0</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>LastName</field>
             <value>
-                <elementReference>New_LastName</elementReference>
+                <elementReference>new_LastName_0</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>PersonBirthdate</field>
             <value>
-                <elementReference>New_DOB</elementReference>
+                <elementReference>new_DOB_0</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>PersonEmail</field>
             <value>
-                <elementReference>New_Email</elementReference>
+                <elementReference>new_Email_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonMailingCity</field>
+            <value>
+                <elementReference>new_City_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonMailingCountry</field>
+            <value>
+                <elementReference>new_Country_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonMailingPostalCode</field>
+            <value>
+                <elementReference>new_PostalCode_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonMailingState</field>
+            <value>
+                <elementReference>new_state_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PersonMailingStreet</field>
+            <value>
+                <elementReference>new_street_0</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>new_phone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -861,7 +829,7 @@
         <inputAssignments>
             <field>Type</field>
             <value>
-                <elementReference>New_AttendeeType</elementReference>
+                <elementReference>new_Type</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -869,8 +837,8 @@
     <recordCreates>
         <name>Create_CovidTest_HV</name>
         <label>Create Covid Test HV</label>
-        <locationX>1383</locationX>
-        <locationY>2092</locationY>
+        <locationX>1462</locationX>
+        <locationY>2283</locationY>
         <assignRecordIdToReference>testHVId</assignRecordIdToReference>
         <connector>
             <targetReference>Update_Record_for_QR_0</targetReference>
@@ -944,7 +912,7 @@
         <inputAssignments>
             <field>vaxhv__HealthVerificationStatus__c</field>
             <value>
-                <stringValue>Verified</stringValue>
+                <stringValue>New</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -963,6 +931,12 @@
             <field>vaxhv__PersonAccount__c</field>
             <value>
                 <elementReference>objAttendee.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>vaxhv__PhoneNumber__c</field>
+            <value>
+                <elementReference>objAttendee.Phone</elementReference>
             </value>
         </inputAssignments>
         <object>vaxhv__Health_Verification__c</object>
@@ -1066,13 +1040,19 @@
                 <elementReference>objAttendee.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>vaxhv__PhoneNumber__c</field>
+            <value>
+                <elementReference>objAttendee.Phone</elementReference>
+            </value>
+        </inputAssignments>
         <object>vaxhv__Health_Verification__c</object>
     </recordCreates>
     <recordCreates>
         <name>Create_Vax_HV</name>
         <label>Create Vax HV</label>
-        <locationX>1386</locationX>
-        <locationY>1815</locationY>
+        <locationX>1314</locationX>
+        <locationY>1897</locationY>
         <assignRecordIdToReference>testHVId</assignRecordIdToReference>
         <connector>
             <targetReference>Update_Record_for_QR_0_0</targetReference>
@@ -1167,58 +1147,26 @@
                 <elementReference>objAttendee.Id</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>vaxhv__PhoneNumber__c</field>
+            <value>
+                <elementReference>objAttendee.Phone</elementReference>
+            </value>
+        </inputAssignments>
         <object>vaxhv__Health_Verification__c</object>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_VIP</name>
-        <label>Create VIP</label>
-        <locationX>774</locationX>
-        <locationY>814</locationY>
-        <assignRecordIdToReference>CreatedAccountID</assignRecordIdToReference>
-        <connector>
-            <targetReference>Get_VIP_After_Create</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>FirstName</field>
-            <value>
-                <elementReference>VIP_FirstName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>LastName</field>
-            <value>
-                <elementReference>VIP_LastName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>PersonEmail</field>
-            <value>
-                <elementReference>VIP_Email</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_Person_Account_RecordTypeId.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <stringValue>VIP</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
     </recordCreates>
     <recordLookups>
         <name>Get_Attendee_After_Create</name>
         <label>Get Attendee After Create</label>
-        <locationX>2279</locationX>
-        <locationY>1281</locationY>
+        <locationX>2617</locationX>
+        <locationY>1173</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Attendee_Type</targetReference>
+            <targetReference>Error_Screen_0</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1247,152 +1195,50 @@
     <recordLookups>
         <name>Get_Attendee_From_Search</name>
         <label>Get Attendee From Search</label>
-        <locationX>1970</locationX>
-        <locationY>1118</locationY>
+        <locationX>2131</locationX>
+        <locationY>607</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Attendee_Found_From_Get_Record</targetReference>
+            <targetReference>Attendee_Search_Outcome</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>SelectedSearchAccountId</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputReference>objAttendee</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>PersonEmail</queriedFields>
-        <queriedFields>PersonBirthdate</queriedFields>
-        <queriedFields>Dreampass_CompanyName__c</queriedFields>
-        <queriedFields>Phone</queriedFields>
-        <queriedFields>Type</queriedFields>
-        <queriedFields>Dreampass_Revoked__c</queriedFields>
-        <queriedFields>Dreampass_Checkin_Time__c</queriedFields>
-        <queriedFields>Dreampass_OnsitePCRTestDate__c</queriedFields>
-        <queriedFields>Dreampass_DreambandID__c</queriedFields>
-        <queriedFields>FirstName</queriedFields>
-        <queriedFields>LastName</queriedFields>
-        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Duplicate_Account</name>
-        <label>Get Duplicate Account</label>
-        <locationX>2666</locationX>
-        <locationY>844</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Does_duplicate_account_exist</targetReference>
-        </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>PersonEmail</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>New_Email</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Duplicate_VIP_Account</name>
-        <label>Get Duplicate VIP Account</label>
-        <locationX>604</locationX>
-        <locationY>663</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Does_duplicate_account_exist_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>PersonEmail</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>VIP_Email</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Existing_Attendee</name>
-        <label>Get Existing Attendee</label>
-        <locationX>2966</locationX>
-        <locationY>1393</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Attendee_Type</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Duplicate_Account.Id</elementReference>
+                <elementReference>email_search</elementReference>
             </value>
         </filters>
         <object>Account</object>
         <outputReference>objAttendee</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
         <queriedFields>PersonEmail</queriedFields>
         <queriedFields>PersonBirthdate</queriedFields>
         <queriedFields>Dreampass_CompanyName__c</queriedFields>
         <queriedFields>Phone</queriedFields>
         <queriedFields>Type</queriedFields>
+        <queriedFields>Dreampass_Revoked__c</queriedFields>
         <queriedFields>Dreampass_Checkin_Time__c</queriedFields>
         <queriedFields>Dreampass_OnsitePCRTestDate__c</queriedFields>
-        <queriedFields>Dreampass_Revoked__c</queriedFields>
         <queriedFields>Dreampass_DreambandID__c</queriedFields>
         <queriedFields>FirstName</queriedFields>
         <queriedFields>LastName</queriedFields>
         <queriedFields>Dreampass_PhotoURL__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Existing_VIP_Attendee</name>
-        <label>Get Existing VIP Attendee</label>
-        <locationX>57</locationX>
-        <locationY>903</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Set_VIP_Text</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Duplicate_VIP_Account.Id</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputReference>objAttendee</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>PersonEmail</queriedFields>
-        <queriedFields>PersonBirthdate</queriedFields>
-        <queriedFields>Dreampass_CompanyName__c</queriedFields>
-        <queriedFields>Phone</queriedFields>
-        <queriedFields>Type</queriedFields>
-        <queriedFields>Dreampass_Checkin_Time__c</queriedFields>
-        <queriedFields>Dreampass_OnsitePCRTestDate__c</queriedFields>
-        <queriedFields>Dreampass_Revoked__c</queriedFields>
-        <queriedFields>Dreampass_DreambandID__c</queriedFields>
-        <queriedFields>FirstName</queriedFields>
-        <queriedFields>LastName</queriedFields>
-        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
+        <queriedFields>PersonMailingStreet</queriedFields>
+        <queriedFields>PersonMailingPostalCode</queriedFields>
+        <queriedFields>PersonMailingCity</queriedFields>
+        <queriedFields>PersonMailingCountry</queriedFields>
+        <queriedFields>PersonMailingState</queriedFields>
+        <queriedFields>Gender__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Person_Account_RecordTypeId</name>
         <label>Get Person Account RecordTypeId</label>
-        <locationX>1181</locationX>
-        <locationY>206</locationY>
+        <locationX>914</locationX>
+        <locationY>184</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Scan_QR_Code</targetReference>
@@ -1410,38 +1256,46 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_VIP_After_Create</name>
-        <label>Get VIP After Create</label>
-        <locationX>774</locationX>
-        <locationY>964</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <name>Get_Unverified_Covid_Test</name>
+        <label>Get Unverified Covid Test</label>
+        <locationX>1982</locationX>
+        <locationY>2025</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_VIP_Text</targetReference>
+            <targetReference>Covid_Test_Missing</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Id</field>
+            <field>vaxhv__PersonAccount__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>CreatedAccountID</elementReference>
+                <elementReference>objAttendee.Id</elementReference>
             </value>
         </filters>
-        <object>Account</object>
-        <outputReference>objAttendee</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>PersonEmail</queriedFields>
-        <queriedFields>PersonBirthdate</queriedFields>
-        <queriedFields>Dreampass_CompanyName__c</queriedFields>
-        <queriedFields>Phone</queriedFields>
-        <queriedFields>Type</queriedFields>
-        <queriedFields>Dreampass_Revoked__c</queriedFields>
-        <queriedFields>Dreampass_Checkin_Time__c</queriedFields>
-        <queriedFields>Dreampass_OnsitePCRTestDate__c</queriedFields>
-        <queriedFields>Dreampass_DreambandID__c</queriedFields>
-        <queriedFields>FirstName</queriedFields>
-        <queriedFields>LastName</queriedFields>
-        <queriedFields>Dreampass_PhotoURL__c</queriedFields>
+        <filters>
+            <field>vaxhv__HealthVerificationStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>vaxhv__HealthVerificationMethod__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Negative COVID-19 test</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>safetycloud__OccurrenceId__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>vaxhv__Health_Verification__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Check_In_Attendee</name>
@@ -1468,34 +1322,17 @@
         <object>Account</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Check_In_Attendee_0</name>
-        <label>Check In Attendee and document test</label>
-        <locationX>250</locationX>
-        <locationY>2400</locationY>
+        <name>Update_Account</name>
+        <label>Update Account</label>
+        <locationX>2470</locationX>
+        <locationY>975</locationY>
         <connector>
-            <targetReference>Complete</targetReference>
+            <targetReference>Get_Attendee_After_Create</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>objAttendee.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Dreampass_Checkin_Time__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Dreampass_OnsitePCRTestDate__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <inputReference>objAttendee</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Record_for_QR</name>
@@ -1530,11 +1367,8 @@
     <recordUpdates>
         <name>Update_Record_for_QR_0</name>
         <label>Update Record for QR</label>
-        <locationX>1176</locationX>
-        <locationY>2145</locationY>
-        <connector>
-            <targetReference>Get_Covid_Test_Status_0</targetReference>
-        </connector>
+        <locationX>1312</locationX>
+        <locationY>2285</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1543,12 +1377,6 @@
                 <elementReference>testHVId</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>safetycloud__TestDateTime__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>vaxhv__PersonAccount__c</field>
             <value>
@@ -1560,8 +1388,8 @@
     <recordUpdates>
         <name>Update_Record_for_QR_0_0</name>
         <label>Update Record for QR</label>
-        <locationX>1189</locationX>
-        <locationY>1865</locationY>
+        <locationX>1206</locationX>
+        <locationY>2007</locationY>
         <connector>
             <targetReference>Get_Vax_Status_0</targetReference>
         </connector>
@@ -1590,73 +1418,28 @@
     <screens>
         <name>Attendee_Search</name>
         <label>Attendee Search</label>
-        <locationX>1962</locationX>
-        <locationY>806</locationY>
-        <allowBack>true</allowBack>
+        <locationX>1809</locationX>
+        <locationY>609</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Attendee_Search_Outcome</targetReference>
+            <targetReference>Get_Attendee_From_Search</targetReference>
         </connector>
         <fields>
             <name>DisplayAttendeeInfo_0_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Attendee Search&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Search for the attendee below. If you can not find the attendee, select “Create New”.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Attendee Search&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Enter your email used for Safety Cloud and click Next&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>accountSearchDT</name>
-            <extensionName>c:Dreampass_AttendeeSearch</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+            <name>email_search</name>
+            <dataType>String</dataType>
+            <fieldText>Email</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>SelectedSearchAccountId</assignToReference>
-                <name>selectedAccountID</name>
-            </outputParameters>
-        </fields>
-        <fields>
-            <name>btnGroupSearch</name>
-            <extensionName>c:Dreampass_FlowButtonGroup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>input3</name>
-                <value>
-                    <stringValue>Select</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output3</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input2</name>
-                <value>
-                    <stringValue>Create New Attendee</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output1</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output2</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>CreateNewAttendee</assignToReference>
-                <name>output2</name>
-            </outputParameters>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -1673,7 +1456,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>checkimage</name>
+            <name>bluecheck</name>
             <extensionName>flowruntime:image</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1700,27 +1483,27 @@
         </fields>
         <fields>
             <name>dispTextComplete</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿Check In Complete!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;A Dreampass was emailed to &quot;&lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&quot;. Have them use this to gain access to all Salesforce Spaces.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Note: this Dreampass will be valid for 36hrs. Please inform them to&lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0);&quot;&gt; receive an onsite PCR test &lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;(if they haven&apos;t already done so) to extend the Dreampass for the remainder of the event.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;﻿Check In Complete!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;A Dreampass was emailed to &quot;&lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&quot;. Use this to gain access to all Salesforce Spaces.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Note: this Dreampass will be valid for 36hrs. Please take&lt;/span&gt;&lt;b style=&quot;color: rgb(0, 0, 0);&quot;&gt; an onsite PCR test &lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;(if you haven&apos;t already done so) to extend the Dreampass for the remainder of the event.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;﻿&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>New Check In</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Finish</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Create_Attendee</name>
         <label>Create Attendee</label>
-        <locationX>2444</locationX>
-        <locationY>847</locationY>
-        <allowBack>true</allowBack>
+        <locationX>2700</locationX>
+        <locationY>602</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Duplicate_Account</targetReference>
+            <targetReference>Create_Attendee_Record</targetReference>
         </connector>
         <fields>
-            <name>DisplayAttendeeInfo_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Create New Attendee&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Make sure to verify with Splash team that this attendee is authorized to be given a Dreampass. Then e&lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;nter attendee information below. &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>DisplayAttendeeInfo_0_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;New Attendee Info&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Please verify your information below: &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1730,25 +1513,60 @@
                 <name>Create_Attendee_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>New_FirstName</name>
+                    <name>new_FirstName_0</name>
                     <dataType>String</dataType>
                     <fieldText>First Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>New_LastName</name>
+                    <name>new_LastName_0</name>
                     <dataType>String</dataType>
                     <fieldText>Last Name</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>New_Email</name>
+                    <name>new_gender_0</name>
+                    <choiceReferences>genderset</choiceReferences>
                     <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.Gender__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Gender</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>new_DOB_0</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Date of Birth (mm/dd/yyyy)</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>new_Email_0</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>email_search</elementReference>
+                    </defaultValue>
                     <fieldText>Email Address</fieldText>
                     <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>new_phone</name>
+                    <dataType>String</dataType>
+                    <fieldText>Phone</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>New_CompanyName</name>
+                    <dataType>String</dataType>
+                    <fieldText>Company Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1762,26 +1580,39 @@
                 <name>Create_Attendee_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>New_DOB</name>
-                    <dataType>Date</dataType>
-                    <fieldText>Date of Birth</fieldText>
+                    <name>new_street_0</name>
+                    <dataType>String</dataType>
+                    <fieldText>Street</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>New_CompanyName</name>
+                    <name>new_City_0</name>
                     <dataType>String</dataType>
-                    <fieldText>Company Name</fieldText>
+                    <fieldText>City</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>New_SplashId</name>
+                    <name>new_state_0</name>
                     <dataType>String</dataType>
-                    <fieldText>Splash ID</fieldText>
+                    <fieldText>State</fieldText>
                     <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;To prevent duplicate attendees from being created, enter the Id of the attendee from Splash (if it exists)&lt;/p&gt;</helpText>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>new_PostalCode_0</name>
+                    <dataType>String</dataType>
+                    <fieldText>Postal Code</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>new_Country_0</name>
+                    <dataType>String</dataType>
+                    <fieldText>Country</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1794,13 +1625,12 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>New_AttendeeType</name>
-            <choiceReferences>ChoiceVIP</choiceReferences>
+            <name>new_Type</name>
             <choiceReferences>ChoiceEmployee</choiceReferences>
             <choiceReferences>ChoiceGuest</choiceReferences>
             <dataType>String</dataType>
-            <defaultSelectedChoiceReference>ChoiceGuest</defaultSelectedChoiceReference>
-            <fieldText>Attendee Type</fieldText>
+            <defaultSelectedChoiceReference>ChoiceEmployee</defaultSelectedChoiceReference>
+            <fieldText>Type</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -1809,58 +1639,17 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Create_VIP_Attendee</name>
-        <label>Create VIP Attendee</label>
-        <locationX>774</locationX>
-        <locationY>566</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Get_Duplicate_VIP_Account</targetReference>
-        </connector>
-        <fields>
-            <name>createVIPText</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Create New VIP&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;E&lt;/span&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;nter VIP information below to generate a Dreampass instantly&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>VIP_FirstName</name>
-            <dataType>String</dataType>
-            <fieldText>First Name</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>VIP_LastName</name>
-            <dataType>String</dataType>
-            <fieldText>Last Name</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>VIP_Email</name>
-            <dataType>String</dataType>
-            <fieldText>Email Address</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Submit</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>1470</locationX>
-        <locationY>1085</locationY>
+        <locationX>2310</locationX>
+        <locationY>1706</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <backButtonLabel>Go Back</backButtonLabel>
         <fields>
             <name>DisplayAttendeeInfo_0_0_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;There&apos;s a Problem&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!strErrorText}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;There&apos;s a Problem&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1868,238 +1657,63 @@
     </screens>
     <screens>
         <name>Error_Screen_0</name>
-        <label>Error Screen</label>
-        <locationX>2107</locationX>
-        <locationY>1945</locationY>
+        <label>Terms and Conditions</label>
+        <locationX>1875</locationX>
+        <locationY>1326</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>VerifyProtocols</targetReference>
+            <targetReference>Attendee_Type</targetReference>
         </connector>
         <fields>
             <name>DisplayAttendeeInfo_0_0_0_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;There&apos;s a Problem&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;{!strErrorText}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Terms and Conditions&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b&gt;Please accept the terms and conditions before continuing&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Go Back</nextOrFinishButtonLabel>
+        <fields>
+            <name>q1</name>
+            <dataType>Boolean</dataType>
+            <fieldText>I confirm that I am at least 18 years old and am: (1) submitting verification form information for myself; or (2) a parent, guardian, or other legal representative authorized to submit verification information on behalf of a minor or other individual(s)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>q2</name>
+            <dataType>Boolean</dataType>
+            <fieldText>I agree to receive status updates via email</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>q3</name>
+            <dataType>Boolean</dataType>
+            <fieldText>I have: (1) read and understand the Terms and Conditions and the Privacy Notice; and (2) consent that Salesforce.com (http://salesforce.com/) Inc. may process information regarding my health status, (COVID-19 vaccination status and testing results) to ensure the health and safety of our in-person attendees and the community at Davos. I can withdraw my consent at any time.</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>morets</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;&amp;nbsp;If you are located in the European Economic Area (EEA) or the UK, please note that it may be required to store and process your personal data in a country (for example, the United States) which may not provide for the same level of protection as in the EEA/the UK. Details on how Salesforce processes your personal data and your related rights are set out in the Salesforce Privacy Statement.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Resolve_Duplicate</name>
-        <label>Resolve Duplicate</label>
-        <locationX>2959</locationX>
-        <locationY>886</locationY>
+        <name>Error_Screen_0_0</name>
+        <label>Error Screen</label>
+        <locationX>612</locationX>
+        <locationY>2884</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>DupSelection</targetReference>
-        </connector>
         <fields>
-            <name>DisplayAttendeeInfo_0_0_0_0_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Duplicate Account&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;There&apos;s already an existing attendee registered with that email address. What would you like to do?&lt;/p&gt;</fieldText>
+            <name>DisplayAttendeeInfo_0_0_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Check in not completed&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;There are outstanding protocols required before a Dreampass can be granted. Ask a Salesforce employee to assist in the outstanding items.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <fields>
-            <name>Resolve_Duplicate_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Resolve_Duplicate_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>newAttendeeText</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You Entered&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!New_FirstName} &lt;/b&gt;&lt;b style=&quot;color: rgb(3, 45, 96); background-color: rgb(255, 255, 255);&quot;&gt;{!New_LastName}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Attendee Type:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!New_AttendeeType}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Date of Birth:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96); background-color: rgb(255, 255, 255);&quot;&gt;{!New_DOB}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(3, 45, 96);&quot;&gt;{!New_Email}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!New_CompanyName}&lt;/b&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Resolve_Duplicate_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>duptext2</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Existing Attendee&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_Account.Name}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Attendee Type:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_Account.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Date of Birth:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_Account.PersonBirthdate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Duplicate_Account.PersonEmail}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_Account.Dreampass_CompanyName__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>dupbuttongroup</name>
-            <extensionName>c:Dreampass_FlowButtonGroup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>input3</name>
-                <value>
-                    <stringValue>Use Existing Attendee</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input1</name>
-                <value>
-                    <stringValue>Go Back</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output1</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input2</name>
-                <value>
-                    <stringValue>Create the New Attendee</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output2</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output3</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>dupUseExisting</assignToReference>
-                <name>output3</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>dupCreateDuplicate</assignToReference>
-                <name>output2</name>
-            </outputParameters>
-        </fields>
-        <nextOrFinishButtonLabel>Go Back</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Resolve_Duplicate_0</name>
-        <label>Resolve Duplicate</label>
-        <locationX>258</locationX>
-        <locationY>875</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>DupSelection_0</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayAttendeeInfo_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Duplicate Account&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;There&apos;s already an existing attendee registered with that email address. What would you like to do?&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Resolve_Duplicate_0_Section1</name>
-            <fieldType>RegionContainer</fieldType>
-            <fields>
-                <name>Resolve_Duplicate_0_Section1_Column1</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>newAttendeeText_0</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;You Entered&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!VIP_FirstName} &lt;/b&gt;&lt;b style=&quot;color: rgb(3, 45, 96); background-color: rgb(255, 255, 255);&quot;&gt;{!VIP_LastName}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Attendee Type:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;VIP&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(3, 45, 96);&quot;&gt;{!VIP_Email}&lt;/b&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Resolve_Duplicate_0_Section1_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>duptext2_0</name>
-                    <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;Existing Attendee&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_VIP_Account.Name}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Attendee Type:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_VIP_Account.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_VIP_Account.PersonEmail}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!Get_Duplicate_VIP_Account.Dreampass_CompanyName__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>dupbuttongroup_0</name>
-            <extensionName>c:Dreampass_FlowButtonGroup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>input3</name>
-                <value>
-                    <stringValue>Use Existing Attendee</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input1</name>
-                <value>
-                    <stringValue>Go Back</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output1</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input2</name>
-                <value>
-                    <stringValue>Create the New Attendee</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output2</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output3</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>dupUseExisting</assignToReference>
-                <name>output3</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>dupCreateDuplicate</assignToReference>
-                <name>output2</name>
-            </outputParameters>
-        </fields>
-        <nextOrFinishButtonLabel>Go Back</nextOrFinishButtonLabel>
-        <showFooter>false</showFooter>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -2226,6 +1840,174 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Review_Information_0</name>
+        <label>Review Information</label>
+        <locationX>1167</locationX>
+        <locationY>2877</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Do_we_need_to_verify_Tests</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayAttendeeInfo_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Testing Check in Complete&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Below are the outstanding protocols required before a Dreampass can be granted. Ask a Salesforce employee to assist in the outstanding items.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;﻿&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Review_Information_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Review_Information_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>alreadycheckedintext_0</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(234, 104, 75);&quot;&gt;Attendee already checked in&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>objAttendee.Dreampass_Checkin_Time__c</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>false</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>ReviewDisplayText_0</name>
+                    <fieldText>&lt;p&gt;Name&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Attendee Type&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Date of Birth&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonBirthdate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96); background-color: rgb(255, 255, 255);&quot;&gt;{!objAttendee.Dreampass_CompanyName__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Review_Information_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>covidTestTile_0</name>
+                    <extensionName>c:Dreampass_HVTile</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>displayText</name>
+                        <value>
+                            <elementReference>CovidTestText</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>staticresource</name>
+                        <value>
+                            <elementReference>covidicon</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>backgroundColor</name>
+                        <value>
+                            <elementReference>covidtestcolor</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Review_Information_0_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>VaccineTile_0</name>
+                    <extensionName>c:Dreampass_HVTile</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>displayText</name>
+                        <value>
+                            <elementReference>VaccineText</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>backgroundColor</name>
+                        <value>
+                            <elementReference>vaxcolor</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>staticresource</name>
+                        <value>
+                            <elementReference>vaxicon</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>objAttendee.Type</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Guest</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>verifybuttons</name>
+            <extensionName>c:Dreampass_FlowButtonGroup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>input3</name>
+                <value>
+                    <stringValue>Verify tests and Check In</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>input2</name>
+                <value>
+                    <stringValue>Finish without Check In</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>output3</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>verifyTests</assignToReference>
+                <name>output3</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Scan_QR_Code</name>
         <label>Scan QR Code</label>
         <locationX>1181</locationX>
@@ -2234,11 +2016,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>VIPAccessDecision</targetReference>
+            <targetReference>Get_Attendee_From_QR</targetReference>
         </connector>
         <fields>
             <name>DispTextStart</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;﻿Welcome to Davos&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Have the attendee hold their QR code inside the frame. It will be scanned automatically.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;﻿Welcome to Davos&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;If you have a registration QR code, place it in the frame. It will be scanned automatically.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2263,55 +2045,194 @@
             <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;No QR Code? Proceed to manual entry.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+        <nextOrFinishButtonLabel>Manual Entry</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Skip_Vax</name>
+        <label>Skip Vax</label>
+        <locationX>1602</locationX>
+        <locationY>1976</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Go Back</backButtonLabel>
+        <connector>
+            <targetReference>Set_Vax_Pills</targetReference>
+        </connector>
         <fields>
-            <name>qrButtonGroup</name>
-            <extensionName>c:Dreampass_FlowButtonGroup</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>output1</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input2</name>
-                <value>
-                    <stringValue>VIP Dreampass</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output2</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>input3</name>
-                <value>
-                    <stringValue>Manual Entry</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>output3</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>VIPAccess</assignToReference>
-                <name>output2</name>
-            </outputParameters>
+            <name>DisplayAttendeeInfo_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Skip Vaccine Verification?&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;You cannot check in until your vaccine has been verified. Either skip this for now, or go back to verify vaccination.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>false</showFooter>
+        <nextOrFinishButtonLabel>Skip</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Update_Attendee</name>
+        <label>Update Attendee</label>
+        <locationX>2308</locationX>
+        <locationY>833</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_Vals</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayAttendeeInfo_0_0_0_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Verify Attendee Info&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Please verify information for &lt;/span&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt; below: &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Update_Attendee_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Update_Attendee_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Update_FirstName</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.FirstName</elementReference>
+                    </defaultValue>
+                    <fieldText>First Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Update_LastName</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.LastName</elementReference>
+                    </defaultValue>
+                    <fieldText>Last Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_gender</name>
+                    <choiceReferences>genderset</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.Gender__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Gender</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>Update_DOB</name>
+                    <dataType>Date</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.PersonBirthdate</elementReference>
+                    </defaultValue>
+                    <fieldText>Date of Birth</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_phone</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.Phone</elementReference>
+                    </defaultValue>
+                    <fieldText>Phone</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_CompanyName</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.Dreampass_CompanyName__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Company Name</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Update_Attendee_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>update_street</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.PersonMailingStreet</elementReference>
+                    </defaultValue>
+                    <fieldText>Street</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_City</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.PersonMailingCity</elementReference>
+                    </defaultValue>
+                    <fieldText>City</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_state</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.PersonMailingState</elementReference>
+                    </defaultValue>
+                    <fieldText>State</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_PostalCode</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.PersonMailingPostalCode</elementReference>
+                    </defaultValue>
+                    <fieldText>Postal Code</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>update_Country</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>objAttendee.PersonMailingCountry</elementReference>
+                    </defaultValue>
+                    <fieldText>Country</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Upload_Profile_Picture</name>
         <label>Upload Profile Picture</label>
-        <locationX>739</locationX>
-        <locationY>2127</locationY>
+        <locationX>594</locationX>
+        <locationY>2090</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2320,7 +2241,7 @@
         </connector>
         <fields>
             <name>displayPhotoUpload</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Upload Profile Picture&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Profile picture for &lt;b&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Upload Profile Picture&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;Upload a profile picture for {!objAttendee.Name}&lt;b&gt; &lt;/b&gt;by clicking &lt;b&gt;Take Photo&lt;/b&gt; and then &lt;b&gt;Save Photo. &lt;/b&gt;You can skip this step by clicking &lt;b&gt;Skip&lt;/b&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2354,29 +2275,29 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>VerifyProtocols</name>
-        <label>Verify Documents</label>
-        <locationX>2106</locationX>
-        <locationY>1545</locationY>
+        <name>Verify_Vax</name>
+        <label>Verify Vax</label>
+        <locationX>1718</locationX>
+        <locationY>1830</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Covid_Test_Status_0_0</targetReference>
+            <targetReference>Is_Attested</targetReference>
         </connector>
         <fields>
-            <name>DisplayAttendeeInfo_0</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 36px; color: rgb(3, 45, 96);&quot;&gt;Verify Documents&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;This attendee needs to have protocol documents verified before we can issue a Dreampass. Please manually check each of these documents for this attendee to verify.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <name>DisplayAttendeeInfo_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(3, 45, 96); font-size: 36px;&quot;&gt;Verify Vaccination&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Have a Salesforce staff member check your vaccination documents. Click next to continue.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>VerifyProtocols_Section1</name>
+            <name>Verify_Vax_Section1</name>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>VerifyProtocols_Section1_Column1</name>
+                <name>Verify_Vax_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>attendeeinfo1</name>
+                    <name>attendeeinfo1_0</name>
                     <fieldText>&lt;p&gt;Name:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Name}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Attendee Type:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Company:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.Dreampass_CompanyName__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
@@ -2389,10 +2310,10 @@
                 <isRequired>false</isRequired>
             </fields>
             <fields>
-                <name>VerifyProtocols_Section1_Column2</name>
+                <name>Verify_Vax_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>attendeeinfo2</name>
+                    <name>attendeeinfo2_0</name>
                     <fieldText>&lt;p&gt;Date of Birth:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonBirthdate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Email:&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(3, 45, 96);&quot;&gt;{!objAttendee.PersonEmail}&lt;/b&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
@@ -2407,69 +2328,18 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Attendee_ID_matches_the_information_provided_above</name>
+            <name>IdMatched</name>
             <dataType>Boolean</dataType>
             <fieldText>Attendee ID matches the information provided above, and attendee has accepted the terms and conditions</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Attendee_has_a_Vaccine_Card_that_confirms_they_are_fully_vaccinated_Fully_vaccin</name>
+            <name>VaxMatched</name>
             <dataType>Boolean</dataType>
             <fieldText>Attendee has a Vaccine Card that confirms they are fully vaccinated. (Fully vaccinated is THREE doses)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>objAttendee.Type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Guest</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>isVaxVerified</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Attendee_has_proof_of_a_recent_72hr_PCR_24hr_Rapid_negative_COVID_19_test_result</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Attendee has proof of a recent (72hr PCR, 24hr Rapid) negative COVID-19 test result</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>isCovidTestVerified</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>OPTIONAL_Attendee_has_proof_of_pending_onsite_PCR_Test_NOT_REQUIRED_FOR_CHECKIN</name>
-            <dataType>Boolean</dataType>
-            <fieldText>OPTIONAL: Attendee has proof of pending onsite PCR Test (NOT REQUIRED FOR CHECK IN)</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>objAttendee.Dreampass_OnsitePCRTestDate__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -2483,6 +2353,39 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Set_Test_Results</name>
+        <label>Set Test Results</label>
+        <locationX>961</locationX>
+        <locationY>2136</locationY>
+        <connector>
+            <targetReference>Everything_Set</targetReference>
+        </connector>
+        <flowName>Set_Covid_Test_Results</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>objAttendee.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>covidicon</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>greencheck</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>covidtestcolor</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>CovidTestText</name>
         <dataType>String</dataType>
@@ -2565,7 +2468,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue>Please confirm the information below matches the attendee&apos;s ID</stringValue>
+            <stringValue>All required protocol is met for check in. Review information and click Check In</stringValue>
         </value>
     </variables>
     <variables>
@@ -2604,6 +2507,36 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue>Vaccination Verified</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>vaxcolor</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>#CDEFC4</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>vaxicon</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>greencheck</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>verifyTests</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>

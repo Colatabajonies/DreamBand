@@ -65,7 +65,7 @@ public class Dreampass_Helper
         {
             DreampassAccessLog__c newLog = new DreampassAccessLog__c();
             newLog.Account__c = objAccount.Id;
-            newLog.Location__c = locationId;
+            newLog.Location__c = String.isblank(locationId) ? null : locationId;
             newLog.Status__c = isValid ? 'Granted' : 'Denied';
             insert newLog;
         }
@@ -77,11 +77,12 @@ public class Dreampass_Helper
     
     public static void SetDreampassValidity(Dreampass objDreampass)
     {
-        integer timewindow = 36;
+        integer timewindow = 24;
         
         Account objAccount = objDreampass.objAccount;
         objDreampass.inValidReason = '';
         objDreampass.isValid = false;
+        objDreampass.expiration = null;
         
         /*<members>Account.Dreampass_Revoked__c</members>
         <members>Account.Dreampass_Checkin_Time__c</members>
@@ -130,6 +131,7 @@ public class Dreampass_Helper
         if (onsiteTest == null)
         {
             objDreampass.inValidReason = '(Active until: ' + objAccount.Dreampass_Checkin_Time__c.AddHours(timewindow).format('E h:mm a') + '. No PCR.)';
+            objDreampass.expiration = objAccount.Dreampass_Checkin_Time__c.AddHours(timewindow);
             if (Datetime.now() > objAccount.Dreampass_Checkin_Time__c.AddHours(timewindow))
             {
                 objDreampass.inValidReason = 'Missing onsite PCR test after check in';
@@ -142,11 +144,13 @@ public class Dreampass_Helper
         if (onsiteTest != null && onsiteTest.vaxhv__HealthVerificationStatus__c != 'Verified')
         {
             objDreampass.inValidReason = '(Active until: ' + onsiteTest.safetycloud__TestDateTime__c.AddHours(timewindow).format('E h:mm a') + '. Pending PCR result.)';
+            objDreampass.expiration = onsiteTest.safetycloud__TestDateTime__c.AddHours(timewindow);
             //If it was rejected...
             if (onsiteTest.vaxhv__HealthVerificationStatus__c == 'Rejected')
             {
                 objDreampass.inValidReason = 'Onsite PCR test rejected';
                 objDreampass.isValid = false;
+                objDreampass.expiration = null;
                 return;
             }
             //Else if we haven't received results in time
@@ -160,6 +164,81 @@ public class Dreampass_Helper
         
         //if all these pass, the Dreampass is valid
         objDreampass.isValid = true;
+    }
+    
+    public static void updateDreampassExpirations(boolean resync)
+    {
+        List<DreampassExpiration__c> objExpirations = new List<DreampassExpiration__c>([SELECT ID, Account__c, Dreampass_Active__c, Dreampass_Expiration__c, LastProcessed__c  FROM DreampassExpiration__c ORDER BY LastProcessed__c ASC]);
+        List<Id> accountIDs = new List<Id>();
+        for(DreampassExpiration__c objExpiration : objExpirations)
+        {
+            accountIDs.add(objExpiration.Account__c);
+        }
+        
+        if (resync)
+        {
+            objExpirations = new List<DreampassExpiration__c>();
+            List<Account> objAs = new List<Account>([SELECT ID FROM ACCOUNT WHERE ID NOT in: accountIDs]);
+            for (Account objA : objAs)
+            {
+                DreampassExpiration__c objExpiration = new DreampassExpiration__c();
+                objExpiration.Account__c = objA.Id;
+                objExpirations.add(objExpiration);
+            }
+            if (objExpirations.size() > 0)
+            {
+                INSERT objExpirations;
+            }
+            return;
+        }
+        
+        integer counter = 0;
+        List<Account> allAccounts = new List<Account>([SELECT ID, Dreampass_Revoked__c, Dreampass_Checkin_Time__c, Type  FROM ACCOUNT]);
+        List<DreampassExpiration__c> expirationstoUpdate = new List<DreampassExpiration__c>();
+        
+        for(DreampassExpiration__c objExpiration : objExpirations)
+        {
+            if (counter >= 40)
+            {
+                break;
+            }
+
+            Account objA = FindAccountbyId(allAccounts, objExpiration.Account__c);
+            if (objA == null)
+            {
+                continue;
+            }
+            
+            Dreampass objDreampass = new Dreampass();
+            objDreampass.objAccount = objA;
+            SetDreampassValidity(objDreampass);
+            
+            objExpiration.Dreampass_Active__c = objDreampass.isValid;
+            objExpiration.Dreampass_Expiration__c = objDreampass.expiration;
+            objExpiration.LastProcessed__c = Datetime.Now();
+            expirationstoUpdate.add(objExpiration);
+            
+            counter+=1;
+        }
+        
+        if (expirationstoUpdate.size() > 0)
+        {
+            UPDATE expirationstoUpdate;
+        }
+
+    }
+    
+    private static Account FindAccountbyId(List<Account> objAs, string accountId)
+    {
+        for (Account objA : objAs)
+        {
+            //Match on person Account
+            if (objA.Id == accountId)
+            {
+                return objA;
+            }
+        }
+        return null;
     }
     
     public static boolean AccountHasVerifiedVax(id accountId)
@@ -212,5 +291,7 @@ public class Dreampass_Helper
         public Boolean isValid;
         @AuraEnabled
         public String inValidReason;
+        @AuraEnabled
+        public datetime expiration;
     }
 }

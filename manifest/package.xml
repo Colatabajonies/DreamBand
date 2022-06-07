@@ -4,6 +4,7 @@
         <members>DreampassAccessLog__c</members>
         <members>Wallet_Setting__c</members>
         <members>LabData__c</members>
+        <members>DreampassExpiration__c</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -36,6 +37,14 @@
         <members>LabData__c.Street_No__c</members>
         <members>LabData__c.Test_Antigen_PCR__c</members>
         <members>LabData__c.Test_result__c</members>
+
+        <members>DreampassExpiration__c.Account__c</members>
+        <members>DreampassExpiration__c.AccountCompany__c</members>
+        <members>DreampassExpiration__c.AccountEmail__c</members>
+        <members>DreampassExpiration__c.Dreampass_Active__c</members>
+        <members>DreampassExpiration__c.Dreampass_Expiration__c</members>
+        <members>DreampassExpiration__c.LastProcessed__c</members>
+        <members>DreampassExpiration__c.Type__c</members>
 
         <members>Wallet_Setting__c.Apple_Certificate_ID__c</members>
         <members>Wallet_Setting__c.EventName__c</members>
@@ -82,7 +91,9 @@
         <members>Dreampass_VaxVerifyAction</members>
         <members>Dreampass_BulkEmailSender</members>
         <members>Dreampass_LabHelper</members>
-        
+        <members>Dreampass_ScheduleExpUpdate</members>
+        <members>Dreampass_FlowGetCollectionFromIDList</members>
+
         <members>DreamPassWalletController</members>
         <members>AppleWalletGenerator</members>
         <members>ApplePassBookDictionary</members>
@@ -159,6 +170,10 @@
         <members>Dreampass_Extend_Onsite_PCR_Time</members>
         <members>Dreampass_ProcessLabImport</members>
         <members>Generate_Apple_Wallet_Pass_from_Check_in</members>
+        <members>Davos_Self_Service_Checkin</members>
+        <members>Davos_Quick_Check_in</members>
+        <members>Set_Covid_Test_Results</members>
+        <members>Email_Dreampass</members>
         <name>Flow</name>
     </types>
     

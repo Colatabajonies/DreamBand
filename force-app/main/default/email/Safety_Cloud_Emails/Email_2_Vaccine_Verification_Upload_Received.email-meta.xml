@@ -8,17 +8,16 @@
     <textOnly>-Please do not forward-
 Hi {!Contact.Name},
 
-To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+To help ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
 
 This is confirmation that your COVID-19 vaccination record has been uploaded. Every step you take in our safety protocol goes a long way in keeping everyone safe — thank you!
 
 Once the vaccine verification process is complete, you’ll receive an email with a status update.
 
-Check your status:
-https://safetycloudfy23.secure.force.com/wefdavos
+Check your status here:
+https://safetycloudfy23.secure.force.com/wefdavos?confirmationId={!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
 
 Health Verification ID: {!vaxhv__Health_Verification__c.Name}_{!vaxhv__Health_Verification__c.vaxhv__ExternalId__c}
-
 Questions? Please reach out to davos@salesforce.com.
 
 We look forward to welcoming you safely in Davos!

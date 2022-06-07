@@ -6,7 +6,7 @@
         <div class="tile" style="{!'background-color:' + v.backgroundColor}">
             <div class="middletile">
                 <div>
-                    <img src="{!$Resource.greencheck}" style="width:40px;margin-bottom:20px;"/>
+                    <img src="{!'/resource/'+ v.staticresource}" style="width:40px;margin-bottom:20px;"/>
                 </div>
                 <div>
                     <lightning:formattedText value="{!v.displayText}" />

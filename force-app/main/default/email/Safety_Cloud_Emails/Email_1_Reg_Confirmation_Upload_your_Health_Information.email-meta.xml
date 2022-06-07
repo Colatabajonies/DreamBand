@@ -8,17 +8,19 @@
     <textOnly>-Please do not forward-
 Hi {!Contact.Name},
 
-To ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
+To help ensure the health and safety of our in-person attendees, and the community at Davos, we have protocols in place before and during the event.
 
 Action Required: Please upload your health status documentation to Salesforce Safety Cloud. This is an essential step in supporting Safety as our #1 value for this event. Every step you take in our safety protocol goes a long way in keeping everyone safe. Required documentation includes:
 
-* Proof of being Fully Vaccinated (including 3rd Dose / Booster After June 21, 2021)
+* Proof of being Fully Vaccinated for Non-Salesforce Employees (including 3rd Dose / Booster After June 21, 2021).
 * Primary Test - Negative PCR test taken no longer than 72 hours before arrival in Davos, or a Negative professionally administered or observed antigen test taken no longer than 24 hours before arrival in Davos
 * Secondary Test - PCR taken at Welcome Center within 24hrs of arrival (Note: If you have tested positive for COVID-19 since April 11, your PCR may be replaced by a second antigen test)
 
 To expedite the onsite check in process, this can be done in advance before arriving onsite by using the Safety Cloud portal below:
 
 https://safetycloudfy23.secure.force.com/wefdavos?externalId={!Contact.Dreampass_ExternalId__c}&amp;firstName={!Contact.FirstName}&amp;lastName={!Contact.LastName}&amp;company={!Contact.Dreampass_CompanyName__c}&amp;email={!Contact.Email}&amp;attendeeType={!Contact.Dreampass_AttendeeType__c}
+
+
 
 Please note all attendees are required to visit the Salesforce Welcome Center prior to attending a Salesforce event to check in and receive a Dreampass.
 

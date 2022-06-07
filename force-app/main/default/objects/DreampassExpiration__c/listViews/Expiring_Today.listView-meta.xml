@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expiring_Today</fullName>
+    <columns>NAME</columns>
+    <columns>Account__c</columns>
+    <columns>AccountCompany__c</columns>
+    <columns>AccountEmail__c</columns>
+    <columns>Dreampass_Active__c</columns>
+    <columns>Dreampass_Expiration__c</columns>
+    <columns>LastProcessed__c</columns>
+    <columns>Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Dreampass_Expiration__c</field>
+        <operation>lessOrEqual</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>Expiring Before Tomorrow</label>
+</ListView>
